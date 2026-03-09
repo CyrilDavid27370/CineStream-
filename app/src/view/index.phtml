@@ -1,0 +1,24 @@
+<?php $title = "Accueil" ?>;
+
+<?php  ob_start()?>
+
+<h2>Liste des films</h2>
+
+<button><a href="">Tous les films</a></button>
+<button><a href="">Action</a></button>
+<button><a href="">Comédie</a></button>
+<button><a href="">Drame</a></button>
+<button><a href="">Horreur</a></button>
+<button><a href="">Fantastique</a></button>
+<button><a href="">n/c</a></button>
+<button><a href="">👁️</a></button>
+<button><a href="">🕒</a></button>
+<ul> 
+  <?php foreach ($films as $film) {
+    # code...
+  } ?>
+</ul>
+
+<?php $content = ob_get_clean() ?>
+
+<?php require 'src/view/base.phtml' ?>
