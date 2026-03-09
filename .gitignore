@@ -1,0 +1,8 @@
+# Config sensible
+.env.php
+
+# Dépendances
+/vendor/
+
+# IDE
+.vscode/
