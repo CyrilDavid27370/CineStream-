@@ -2,5 +2,16 @@
 
 <?php ob_start() ?>
 
+<button><a href="?route=index">Tous les films</a></button>
+
+<?php foreach ($genres as $genre) { ?>
+  <button><a href="?route=index&genre=<?= $genre->getId() ?>">
+    <?= htmlspecialchars($genre->getName()) ?>
+  </a></button>
+<?php } ?>
+
+  <button><a href="?route=index">n/c</a></button>
+  <button><a href="?route=index&filter=watched">👁️</a></button>
+  <button><a href="?route=index&filter=towatch">🕒</a></button>
 <?php $content = ob_get_clean() ?>
 <?php require __DIR__ . '/../base.phtml' ?>

@@ -1,6 +1,6 @@
 <?php
 
-namespace Cine\app\Entity;
+namespace Cine\App\Entity;
 
 class Genre
 {
