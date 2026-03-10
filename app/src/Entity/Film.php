@@ -7,12 +7,13 @@ class Film
   private $id;
   private $tmdb_id;
   private $title;
+  private $poster_path;
   private $release_date;
   private $runtime;
   private $overview;
   private $genre_id;
   private $description;
-  private $is_Watched;
+  private $isWatched;
 
   /**
    * Get the value of id
@@ -175,21 +176,41 @@ class Film
   }
 
   /**
-   * Get the value of is_Watched
+   * Get the value of poster_path
    */ 
-  public function getIs_Watched()
+  public function getPoster_path()
   {
-    return $this->is_Watched;
+    return $this->poster_path;
   }
 
   /**
-   * Set the value of is_Watched
+   * Set the value of poster_path
    *
    * @return  self
    */ 
-  public function setIs_Watched($is_Watched)
+  public function setPoster_path($poster_path)
   {
-    $this->is_Watched = $is_Watched;
+    $this->poster_path = $poster_path;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of isWatched
+   */ 
+  public function getIsWatched()
+  {
+    return $this->isWatched;
+  }
+
+  /**
+   * Set the value of isWatched
+   *
+   * @return  self
+   */ 
+  public function setIsWatched($isWatched)
+  {
+    $this->isWatched = $isWatched;
 
     return $this;
   }
