@@ -14,7 +14,6 @@ header {
     text-align: center;
     padding: 30px 20px 20px;
     background: linear-gradient(#1A1A2E, #16213E);
-    margin-bottom: -4;
 }
 
 header h1 {
@@ -35,7 +34,6 @@ nav {
     padding: 12px 20px;
     text-align: center;
     border-bottom: 3px solid #E94560;
-    margin-top: 0;
 }
 
 nav ul {
@@ -80,16 +78,97 @@ nav ul li a:hover {
 }
 
 main {
-  background-color: #0D0D0D;
-  padding: 20px;
-  margin-top: 0;
+    background-color: #0D0D0D;
+    padding: 20px;
 }
 
+/* ===== BOUTONS FILTRES ===== */
+.filters {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 15px;
+    overflow-x: auto;
+}
+
+.filters button {
+    background-color: #0D0D0D;
+    color: #ffffff;
+    border: 1.5px solid #E94560;
+    border-radius: 30px;
+    padding: 6px 16px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.filters button:hover,
+.filters button.active {
+    background-color: #E94560;
+    color: #ffffff;
+}
+
+.filters button a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* ===== FILMS GRID ===== */
+.films-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 15px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+/* ===== CARTE FILM ===== */
+.card {
+    background-color: #1A1A1A;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background-color: #1A1A1A;
+}
+
+.no-poster {
+    width: 100%;
+    height: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    background-color: #1A1A1A;
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: bold;
+    padding: 8px 10px 4px;
+    color: #ffffff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-meta {
+    font-size: 0.85rem;
+    color: #888888;
+    padding: 0 10px 10px;
+}
+
+/* ===== TABLETTE ===== */
 @media (min-width: 480px) {
-    header h1{
-      font-size: 2rem;
-    }
-  
     .hamburger {
         display: none;
     }
@@ -100,13 +179,52 @@ main {
         justify-content: center;
         gap: 20px;
     }
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    .films-grid {
+        grid-template-columns: repeat(2, 1fr);
+        padding: 20px;
+    }
+
+    .card img {
+        height: 270px;
+        object-fit: cover;
+    }
 }
 
+/* ===== DESKTOP ===== */
 @media (min-width: 768px) {
-    header h1 {
-      font-size: 2.5rem;
+    .hamburger {
+        display: none;
     }
+
+    header h1 {
+        font-size: 2.5rem;
+    }
+
     .label {
         display: inline;
+    }
+
+    .films-grid {
+        grid-template-columns: repeat(3, 1fr);
+        padding: 20px 30px;
+    }
+
+    .card img {
+        height: auto;
+        object-fit: contain;
+    }
+
+    .card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3);
+    }
+
+    .filters {
+        padding: 20px 30px;
     }
 }
