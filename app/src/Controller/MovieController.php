@@ -15,7 +15,9 @@ class MovieController
   
   public function index() 
   {
-    
+    $films = [];
+
+    require __DIR__ . '/../view/films/index.phtml';
   }
 
   public function show()

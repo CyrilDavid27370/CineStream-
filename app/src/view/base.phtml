@@ -3,20 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
     <title><?= $title ?></title>
 </head>
 <body>
-    <!-- Header -->
-    <h1>🎬 CinéStream +</h1>
-    <p>Votre cinéma, partout, à tout moment. </p>
-    <!-- Menu -->
-    <ul>
-        <li>
-            <a href="">📼 VIDÉOTHEQUE</a>
-            <a href="">🔍 RECHERCHE</a>
-        </li>
+    <header>
+        <h1>🎬 CineStream +</h1>
+        <p>Votre cinéma, partout, à tout moment</p>
+    </header>
+    
+    <nav>
+        <input type="checkbox" id="nav-toggle">
+        <label class="hamburger" for="nav-toggle">☰</label>
+    <ul id="nav-menu">
+        <li><a href="">📼 <span class="label">VIDÉOTHEQUE</span></a></li>
+        <li><a href="">🔍 <span class="label">RECHERCHE</span></a></li>
     </ul>
-    <?= $content ?>
+</nav>
+    
+    <main>
+        <?= $content ?>
+    </main>
 
 </body>
 </html>
