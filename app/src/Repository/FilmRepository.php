@@ -15,4 +15,28 @@ class FilmRepository extends Repository
 
     return $request->fetchAll(PDO::FETCH_CLASS, Film::class);
   }
+  
+  public function findByGenre(int $genreId) 
+{
+    $sql = "SELECT * FROM film WHERE genre_id = :genre_id";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['genre_id' => $genreId]);
+    return $request->fetchAll(PDO::FETCH_CLASS, Film::class);
+}
+
+public function findByWatched(bool $isWatched)
+{
+    $sql = "SELECT * FROM film WHERE isWatched = :isWatched";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['isWatched' => (int)$isWatched]);
+    return $request->fetchAll(PDO::FETCH_CLASS, Film::class);
+}
+
+public function findByNoGenre() 
+{
+    $sql = "SELECT * FROM film WHERE genre_id IS NULL";
+    $request = $this->pdo->prepare($sql);
+    $request->execute();
+    return $request->fetchAll(PDO::FETCH_CLASS, Film::class);
+}
 }

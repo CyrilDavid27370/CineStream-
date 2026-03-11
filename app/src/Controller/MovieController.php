@@ -21,7 +21,20 @@ class MovieController
   public function index() 
   {
     $genres = $this->genreRepository->findAll();
+
+  if (isset($_GET['genre'])) {
+    if ($_GET['genre'] === 'nc') {
+        $films = $this->filmRepository->findByNoGenre();
+    } else {
+        $films = $this->filmRepository->findByGenre((int)$_GET['genre']);
+    }
+} elseif (isset($_GET['filter']) && $_GET['filter'] === 'watched') {
+    $films = $this->filmRepository->findByWatched(true);
+} elseif (isset($_GET['filter']) && $_GET['filter'] === 'towatch') {
+    $films = $this->filmRepository->findByWatched(false);
+} else {
     $films = $this->filmRepository->findAll();
+}
     require __DIR__ . '/../view/films/index.phtml';
   }
 
