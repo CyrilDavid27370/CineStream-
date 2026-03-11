@@ -13,6 +13,6 @@ class GenreRepository extends Repository
     $request = $this->pdo->prepare($sql);
     $request->execute();
 
-    return $request->fetchall(PDO::FETCH_CLASS, genre::class);
+    return $request->fetchall(PDO::FETCH_CLASS, Genre::class);
   }
 }

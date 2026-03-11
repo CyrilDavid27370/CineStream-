@@ -22,7 +22,6 @@ class MovieController
   {
     $genres = $this->genreRepository->findAll();
     $films = $this->filmRepository->findAll();
-
     require __DIR__ . '/../view/films/index.phtml';
   }
 

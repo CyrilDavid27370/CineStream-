@@ -15,7 +15,10 @@
     <button><a href="?route=index&filter=watched">👁️</a></button>
     <button><a href="?route=index&filter=towatch">🕒</a></button>
 </div>
-
+    <?php  if (empty($films)) { ?>
+        <p class="empty-message">🎬 Votre vidéothèque est vide. Commencez à constituer votre collection !</p>
+    <?php } else { ?>
+    
 <div class="films-grid">
     <?php foreach ($films as $film) { ?>
         <div class="card">
@@ -29,6 +32,7 @@
         </div>
     <?php } ?>
 </div>
+<?php } ?>
 
 <?php $content = ob_get_clean() ?>
 <?php require __DIR__ . '/../base.phtml' ?>
