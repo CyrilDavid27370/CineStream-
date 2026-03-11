@@ -19,19 +19,22 @@
         <p class="empty-message">🎬 Votre vidéothèque est vide. Commencez à constituer votre collection !</p>
     <?php } else { ?>
     
-<div class="films-grid">
-    <?php foreach ($films as $film) { ?>
-        <div class="card">
-            <?php if ($film->getPoster_path()) { ?>
-                <img src="https://image.tmdb.org/t/p/w500<?= $film->getPoster_path() ?>" alt="<?= htmlspecialchars($film->getTitle()) ?>">
-            <?php } else { ?>
+    <div class="films-grid">
+        <?php foreach ($films as $film) { ?>
+            <a href="?route=show&id=<?= $film->getId() ?>" class="card-link">
+        
+                <div class="card">
+                    <?php if ($film->getPoster_path()) { ?>
+                        <img src="https://image.tmdb.org/t/p/w500<?= $film->getPoster_path() ?>" alt="<?= htmlspecialchars($film->getTitle()) ?>">
+                    <?php } else { ?>
                 <div class="no-poster">🎥</div>
-            <?php } ?>
-            <p class="card-title"><?= htmlspecialchars($film->getTitle()) ?></p>
-            <p class="card-meta">📅 <?= $film->getRelease_date() ?> <?= $film->getIsWatched() ? '👁️' : '🕒' ?></p>
-        </div>
-    <?php } ?>
-</div>
+                    <?php } ?>
+                        <p class="card-title"><?= htmlspecialchars($film->getTitle()) ?></p>
+                        <p class="card-meta">📅 <?= $film->getRelease_date() ?> <?= $film->getIsWatched() ? '👁️' : '🕒' ?></p>
+                </div>
+            </a>
+        <?php } ?>
+    </div>
 <?php } ?>
 
 <?php $content = ob_get_clean() ?>

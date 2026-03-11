@@ -39,4 +39,13 @@ public function findByNoGenre()
     $request->execute();
     return $request->fetchAll(PDO::FETCH_CLASS, Film::class);
 }
+
+public function findById(int $id) {
+    $sql = "SELECT * FROM film WHERE id = :id";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['id' => $id]);
+    $request->setFetchMode(PDO::FETCH_CLASS, Film::class);
+
+    return $request->fetch();
+}
 }

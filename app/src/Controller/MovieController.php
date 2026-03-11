@@ -40,7 +40,10 @@ class MovieController
 
   public function show()
   {
+    $id = (int)$_GET['id'];
+    $film = $this->filmRepository->findById($id);
 
+    require __DIR__ . '/../view/films/show.phtml';
   }
 
   public function update()

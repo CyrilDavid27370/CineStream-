@@ -1,0 +1,43 @@
+<?php $title = $film->getTitle(); ?>
+
+<?php ob_start() ?>
+
+<div class="film-detail">
+    <div class="film-detail-poster">
+        <?php if ($film->getPoster_path()) { ?>
+            <img src="https://image.tmdb.org/t/p/w500<?= $film->getPoster_path() ?>" alt="<?= htmlspecialchars($film->getTitle()) ?>">
+        <?php } else { ?>    
+            <div class="no-poster">🎥</div>
+        <?php } ?>
+    </div>
+
+    <div class="film-detail-info">
+        <div class="film-detail-header">
+            <h2><?= htmlspecialchars($film->getTitle()) ?></h2>
+            <div class="film-detail-actions">
+                <a href="?route=update&id=<?= $film->getId() ?>">✏️</a>
+                <a href="?route=delete&id=<?= $film->getId() ?>">❌</a>
+            </div>
+        </div>
+
+        <p class="film-detail-meta">
+            📅 <?= $film->getRelease_date() ?> |
+            🕐 <?= $film->getRuntime() ?> min | 
+            <?= $film->getIsWatched() ? '👁️ Vu' : '🕒 À voir' ?>
+        </p>
+
+        <?php if ($film->getDescription()) { ?>
+            <p class="film-detail-description"><?= htmlspecialchars($film->getDescription()) ?></p>
+        <?php } ?>
+
+        <p class="film-detail-overview"><?= htmlspecialchars($film->getOverview()) ?></p>
+        
+        <div class="btn-back-container">
+          <a href="?route=index" class="btn-back">Retour à la page précédente</a>
+        </div>
+        
+    </div>
+</div>
+
+<?php $content = ob_get_clean() ?>
+<?php require __DIR__ . '/../base.phtml' ?>
