@@ -7,19 +7,9 @@
     <title><?= $title ?></title>
 </head>
 <body>
-    <header>
-        <h1>🎬 CineStream +</h1>
-        <p>Votre cinéma, partout, à tout moment</p>
-    </header>
     
-    <nav>
-        <input type="checkbox" id="nav-toggle">
-        <label class="hamburger" for="nav-toggle">☰</label>
-        <ul id="nav-menu">
-            <li><a href="">📼 <span class="label">VIDÉOTHEQUE</span></a></li>
-            <li><a href="">🔍 <span class="label">RECHERCHE</span></a></li>
-        </ul>
-    </nav>
+    <?php require __DIR__ . '/_shared/_header.phtml' ?>
+    <?php require __DIR__ . '/_shared/_nav.phtml' ?>
     
     <main>
         <?= $content ?>
