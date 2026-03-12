@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 use Cine\App\Controller\MovieController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
