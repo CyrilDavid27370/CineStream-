@@ -18,7 +18,7 @@
                 <h2><?= htmlspecialchars($film->getTitle()) ?></h2>
                 <div class="film-detail-actions">
                     <a href="?route=update&id=<?= $film->getId() ?>">✏️</a>
-                    <a href="?route=delete&id=<?= $film->getId() ?>">❌</a>
+                    <a href="?route=delete&id=<?= $film->getId() ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?')">❌</a>
                 </div>
             </div>
 

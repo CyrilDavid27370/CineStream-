@@ -53,7 +53,11 @@ class MovieController
 
   public function delete()
   {
+    $id = (int)$_GET['id'];
+    $this->filmRepository->delete($id);
 
+    header('location: ?route=index');
+    exit;
   }
   
   public function search()

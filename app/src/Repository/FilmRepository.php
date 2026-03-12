@@ -48,4 +48,10 @@ public function findById(int $id) {
 
     return $request->fetch();
 }
+
+public function delete($id) {
+    $sql = "DELETE FROM film WHERE id = :id";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['id' => $id]);
+}
 }
