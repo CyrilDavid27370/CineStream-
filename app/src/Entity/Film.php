@@ -14,6 +14,7 @@ class Film
   private $genre_id;
   private $description;
   private $isWatched;
+  private $genre_name;
 
   /**
    * Get the value of id
@@ -211,6 +212,26 @@ class Film
   public function setIsWatched($isWatched)
   {
     $this->isWatched = $isWatched;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of genre_name
+   */ 
+  public function getGenre_name()
+  {
+    return $this->genre_name;
+  }
+
+  /**
+   * Set the value of genre_name
+   *
+   * @return  self
+   */ 
+  public function setGenre_name($genre_name)
+  {
+    $this->genre_name = $genre_name;
 
     return $this;
   }

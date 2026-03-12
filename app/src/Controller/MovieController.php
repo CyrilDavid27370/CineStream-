@@ -48,7 +48,23 @@ class MovieController
 
   public function update()
   {
+      $id = (int)$_GET['id'];
+      $film = $this->filmRepository->findById($id);
+      $genres = $this->genreRepository->findAll();
 
+      if(isset($_POST['genre_id'])) {
+        $film->setGenre_id(!empty($_POST['genre_id']) ? (int)$_POST['genre_id'] : null);
+        $film->setDescription($_POST['description'] ?? null);
+        $film->setIsWatched(isset($_POST['isWatched']) ? (bool)$_POST['isWatched'] : false);
+
+        $this->filmRepository->update($film);
+        
+        header('Location: ?route=show&id=' . $id);
+        exit;
+      }
+
+        require __DIR__ . '/../view/films/update.phtml';
+        
   }
 
   public function delete()
