@@ -1,0 +1,53 @@
+<?php $title = "Recherche TMDB"; ?>
+
+<?php ob_start() ?>
+
+<div class="search-container">
+  <form action="" method="GET" class="search-form">
+    <input type="hidden" name="route" value="search">
+    <div class="search-input-row">
+        <input type="text" name="query" class="search-input"
+            placeholder="Rechercher un film..."
+            value="<?= htmlspecialchars($_GET['query'] ?? '') ?>">
+        <button type="submit" class="btn-submit">🔍 Rechercher</button>
+    </div>
+</form>
+
+  <?php if (!empty($films)) {?>
+    
+    <div class="films-grid">
+
+      <?php foreach ($films as $film) { ?>
+        
+        <a href="?route=showTmdb&id=<?= $film['id'] ?>" class="card-link">
+          <div class="card">
+
+            <?php if (!empty($film['poster_path'])) { ?>
+            
+              <img src="<?= TMDB_IMAGE_URL . $film['poster_path'] ?>" alt="<?= htmlspecialchars($film['title']) ?>">
+
+            <?php } else { ?>
+
+              <div class="no-poster">🎥</div>
+            
+            <?php } ?>
+
+              <div class="card-title"><?= htmlspecialchars($film['title']) ?></div>
+              <div class="card-meta">📅 <?= substr($film['release_date'] ?? 'nc' , 0, 4) ?></div>
+          </div>
+        </a>
+      
+        <?php } ?>
+
+    </div>
+
+  <?php } elseif  (isset($_GET['query'])) { ?>
+
+    <p class="empty-message">🎬 Aucun film trouvé pour "<?= htmlspecialchars($_GET['query']) ?></p>
+
+  <?php } ?>
+
+</div>
+
+<?php $content = ob_get_clean() ?>
+<?php require __DIR__ . '/../base.phtml' ?>

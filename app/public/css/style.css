@@ -274,11 +274,10 @@ main {
     border: 1px solid #333;
     border-radius: 8px;
     padding: 10px 15px;
-    font-size: 0,9rem;
+    font-size: 0.9rem;
     margin-bottom: 15px;
     transition: border 0.3s;
 }
-
 .form-genre-row {
     display: flex;
     align-items: center;
@@ -360,6 +359,39 @@ main {
     max-width: 900px;
     margin: 15px auto 0;
     font-size: 0.9rem;
+}
+
+.search-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.search-form {
+    margin-bottom: 20px;
+}
+
+.search-input-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.search-input {
+    width: 100%;
+    max-width: 500px;
+    background-color: #2A2A2A;
+    color: #ffffff;
+    border: 1px solid #333;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+    transition: border 0.3s;
+}
+
+.search-input:focus {
+    border: 1px solid #E94560;
+    outline: none;
 }
 
 /* ===== TABLETTE ===== */
@@ -479,8 +511,6 @@ main {
         width: 100%;
     }
 
-    @media (min-width: 768px) {
-
     .form-row {
         display: flex;
         align-items: center;
@@ -497,5 +527,4 @@ main {
         flex-direction: column;
         margin-bottom: 0;
     }
-}
 }
