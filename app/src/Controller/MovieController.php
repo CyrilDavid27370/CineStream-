@@ -60,7 +60,9 @@ class MovieController
         $film->setIsWatched(isset($_POST['isWatched']) ? (bool)$_POST['isWatched'] : false);
 
         $this->filmRepository->update($film);
-        
+
+        $_SESSION['flash'] = '✅ Film modifié avec succès !';
+
         header('Location: ?route=show&id=' . $id);
         exit;
       }
