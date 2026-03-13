@@ -7,7 +7,6 @@ use Cine\App\Repository\FilmRepository;
 use Cine\App\Repository\GenreRepository;
 use Cine\App\Service\Tmdb\Tmdb;
 
-
 class MovieController
 {
   private $genreRepository;
@@ -31,11 +30,12 @@ class MovieController
     } else {
         $films = $this->filmRepository->findByGenre((int)$_GET['genre']);
     }
-} elseif (isset($_GET['filter']) && $_GET['filter'] === 'watched') {
+
+    } elseif (isset($_GET['filter']) && $_GET['filter'] === 'watched') {
     $films = $this->filmRepository->findByWatched(true);
-} elseif (isset($_GET['filter']) && $_GET['filter'] === 'towatch') {
+    } elseif (isset($_GET['filter']) && $_GET['filter'] === 'towatch') {
     $films = $this->filmRepository->findByWatched(false);
-} else {
+    } else {
     $films = $this->filmRepository->findAll();
 }
     require __DIR__ . '/../view/films/index.phtml';
@@ -63,7 +63,7 @@ class MovieController
         $this->filmRepository->update($film);
 
         $_SESSION['flash'] = '✅ Film modifié avec succès !';
-        
+
         header('Location: ?route=show&id=' . $id);
         exit;
       }
@@ -85,9 +85,9 @@ class MovieController
   {
     $films = [];
 
-    if (isset($_GET['query']) && !empty($_GET['query'])) {
-        $results = $this->tmdb->getFilmByTmdbSearch($_GET['query']);
-        $films = $results['results'] ?? [];
+    if(isset($_GET['query']) && !empty($_GET['query'])) {
+      $results = $this->tmdb->getFilmByTmdbSearch($_GET['query']);
+      $films = $results['results'];
     }
 
     require __DIR__ . '/../view/films/search.phtml';
@@ -99,7 +99,7 @@ class MovieController
     $film = $this->tmdb->getFilmByTmdbId((int)$_GET['id']);
 
     require __DIR__ . '/../view/films/showTmdb.phtml';
-    
+
   }
 
 }

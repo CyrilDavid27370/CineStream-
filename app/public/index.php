@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 
 use Cine\App\Controller\MovieController;

@@ -16,7 +16,7 @@ class Tmdb
     {
         return $this->tmdb_get('/search/movie', ['query' => $search]);
     }
-  
+
     /**
      * Récupère les détails d'un film par son identifiant TMDB
      */

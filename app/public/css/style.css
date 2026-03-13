@@ -347,6 +347,23 @@ main {
 .btn-back-container {
     text-align: center;
     margin-top: 20px;
+} 
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.form-row .form-select {
+    width: 70%;
+    margin-bottom: 0;
+    }
+
+.form-row .form-radio {
+    flex-shrink: 0;
+    flex-direction: column;
+    margin-bottom: 0;
 }
 
 .flash-message {
@@ -373,13 +390,16 @@ main {
 
 .search-input-row {
     display: flex;
-    justify-content: center;
+}
+.search-input {
     gap: 10px;
+    max-width: 700px;
+    margin: 0 auto;
 }
 
 .search-input {
-    width: 100%;
-    max-width: 500px;
+    flex: 1;
+    max-width: 165px;
     background-color: #2A2A2A;
     color: #ffffff;
     border: 1px solid #333;
@@ -449,6 +469,10 @@ main {
         width: 100%;
     }
 
+    .search-input {
+    max-width: 250px;
+}
+
 }
 
 
@@ -510,21 +534,7 @@ main {
         min-height: 300px;
         width: 100%;
     }
-
-    .form-row {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-    }
-
-    .form-row .form-select {
-        width: 70%;
-        margin-bottom: 0;
-    }
-
-    .form-row .form-radio {
-        flex-shrink: 0;
-        flex-direction: column;
-        margin-bottom: 0;
-    }
 }
+    .search-input {
+        max-width: none;
+    }
