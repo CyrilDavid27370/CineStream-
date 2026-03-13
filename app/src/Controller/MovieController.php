@@ -5,17 +5,19 @@ namespace Cine\App\Controller;
 use Cine\App\Entity\Genre;
 use Cine\App\Repository\FilmRepository;
 use Cine\App\Repository\GenreRepository;
-
+use Cine\App\Service\Tmdb\Tmdb;
 
 class MovieController
 {
   private $genreRepository;
   private $filmRepository;
+  private $tmdb;
 
   public function __construct()
   {
     $this->genreRepository = new GenreRepository;
     $this->filmRepository = new FilmRepository;
+    $this->tmdb = new Tmdb;
   }
   
   public function index() 
@@ -78,12 +80,22 @@ class MovieController
   
   public function search()
   {
+    $films = [];
+
+    if(isset($_GET['query']) && !empty($_GET['query'])) {
+      $results = $this->tmdb->getFilmByTmdbSearch($_GET['query']);
+      $films = $results['results'];
+    }
+
+    require __DIR__ . '/../view/films/search.phtml';
 
   }
 
   public function showTmdb()
   {
-    
+    $film = $this->tmdb->getFilmByTmdbId((int)$_GET['id']);
+
+    require __DIR__ . '/../view/films/showTmdb.phtml';
   }
 
 }
