@@ -6,10 +6,15 @@
 
     <div class="film-detail-top">
         <div class="film-detail-poster">
+
             <?php if ($film->getPoster_path()) { ?>
+
                 <img src="https://image.tmdb.org/t/p/w500<?= $film->getPoster_path() ?>" alt="<?= htmlspecialchars($film->getTitle()) ?>">
+
             <?php } else { ?>
+                
                 <div class="no-poster">🎥</div>
+
             <?php } ?>
         </div>
 

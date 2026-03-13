@@ -3,19 +3,22 @@
 <?php ob_start() ?>
 
 <div class="search-container">
-  <form action="" method="GET" class="search-form">
+
+<form action="" method="GET" class="search-form">
     <input type="hidden" name="route" value="search">
-    <div class="search-input-row">
+
+  <div class="search-input-row">
         <input type="text" name="query" class="search-input"
             placeholder="Rechercher un film..."
             value="<?= htmlspecialchars($_GET['query'] ?? '') ?>">
         <button type="submit" class="btn-submit"> Rechercher</button>
-    </div>
+
+  </div>
 </form>
 
   <?php if (!empty($films)) {?>
     
-    <div class="films-grid">
+    <div class="search-grid">
 
       <?php foreach ($films as $film) { ?>
         
@@ -32,8 +35,8 @@
             
             <?php } ?>
 
-              <div class="card-title"><?= htmlspecialchars($film['title']) ?></div>
-              <div class="card-meta">📅 <?= substr($film['release_date'] ?? 'nc' , 0, 4) ?></div>
+              <div class="search-title"><?= htmlspecialchars($film['title']) ?></div>
+              <div class="search-meta">📅 <?= substr($film['release_date'] ?? 'nc' , 0, 4) ?></div>
           </div>
         </a>
       

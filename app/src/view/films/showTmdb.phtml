@@ -1,0 +1,53 @@
+<?php $title = htmlspecialchars($film['title'] ?? 'Film TMDB') ?>
+
+<?php ob_start() ?>
+
+<div class="film-detail">
+
+  <div class="film-detail-top">
+    
+    <div class="film-detail-poster">
+      <?php if (!empty($film['poster_path'])) { ?>
+        <img src="<?= Cine\App\Service\Tmdb\Tmdb::IMG_URL . $film['poster_path'] ?>" alt="<?= htmlspecialchars($film['title']) ?>">
+      <?php } else { ?>
+        <div class="no-poster">🎥</div>
+      <?php } ?>
+    </div>
+
+    <div class="film-detail-info">
+      <div class="film-detail-header">
+        <h2><?= htmlspecialchars($film['title']) ?></h2>
+        <div class="film-detail-actions">
+          <a href="?route=addFromTmdb&id=<?= (int)$film['id'] ?>">➕</a>
+        </div>
+      </div>
+
+      <div class="film-detail-meta">
+        📅 <?= substr($film['release_date'] ?? 'n/c', 0, 4) ?>
+        &nbsp;|&nbsp;
+        ⏱ <?= $film['runtime'] ?? '?' ?> min
+        &nbsp;|&nbsp;
+        🎭 <?php 
+          $genres = array_column($film['genres'] ?? [], 'name');
+          echo !empty($genres) ? implode(', ', $genres) : 'n/c'; ?>
+      </div>
+
+      <div class="film-detail-meta">
+        ⭐ <?= number_format($film['vote_average'] ?? 0, 1) ?>/10
+        (<?= number_format($film['vote_count'] ?? 0) ?> votes)
+      </div>
+    </div>
+  </div>
+
+  <div class="film-detail-overview">
+    <p><?= !empty($film['overview']) ? htmlspecialchars($film['overview']) : 'Aucun synopsis disponible' ?></p>
+  </div>
+
+</div>
+
+<div class="btn-back-container">
+  <a href="?route=search&query=<?= urlencode($_GET['query'] ?? '') ?>" class="btn-back">Retour à la page précédente</a>
+</div>
+<?php $content = ob_get_clean() ?>
+
+<?php require __DIR__ . '/../base.phtml' ?>
