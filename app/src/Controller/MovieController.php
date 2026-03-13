@@ -2,6 +2,7 @@
 
 namespace Cine\App\Controller;
 
+use Cine\App\Entity\Film;
 use Cine\App\Entity\Genre;
 use Cine\App\Repository\FilmRepository;
 use Cine\App\Repository\GenreRepository;
@@ -99,6 +100,36 @@ class MovieController
     $film = $this->tmdb->getFilmByTmdbId((int)$_GET['id']);
 
     require __DIR__ . '/../view/films/showTmdb.phtml';
+
+  }
+
+  public function addFromTmdb() 
+  {
+    $tmdbId = (int)$_GET['id'];
+
+    $existingFilm = $this->filmRepository->findByTmdbId($tmdbId);
+      if ($existingFilm) {
+          $_SESSION['flash'] = '⚠️ Ce film est déjà dans votre vidéothèque !';
+        header('Location: ?route=show&id=' . $existingFilm->getId());
+        exit;
+    }
+    $filmData = $this->tmdb->getFilmByTmdbId($tmdbId);
+
+    $film = new Film;
+    $film->setTmdb_id($filmData['id']);
+    $film->setTitle($filmData['title']);
+    $film->setPoster_path($filmData['poster_path']);
+    $film->setRelease_date(!empty($filmData['release_date']) ? $filmData['release_date'] : null);
+    $film->setRuntime($filmData['runtime'] ?? 0);
+    $film->setOverview($filmData['overview'] ? : '');
+    $film->setIsWatched(false);
+
+    $this->filmRepository->add($film);
+
+    $_SESSION['flash'] = '✅ Film ajouté à la vidéothèque !';
+
+    header('Location: ?route=index');
+    exit;
 
   }
 

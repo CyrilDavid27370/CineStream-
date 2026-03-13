@@ -25,6 +25,8 @@ if ($route === 'index') {
   $movieController->delete();
 } elseif ($route === 'search') {
   $movieController->search();
-}elseif ($route === 'showTmdb') {
+} elseif ($route === 'showTmdb') {
   $movieController->showTmdb();
+} elseif ($route === 'addFromTmdb') {
+  $movieController->addFromTmdb();
 }

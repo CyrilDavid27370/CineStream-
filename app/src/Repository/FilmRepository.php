@@ -71,4 +71,28 @@ public function update(Film $film)
         'id' => $film->getId()
     ]);
 }
+
+public function add(Film $film) {
+    $sql = "INSERT INTO film (tmdb_id, title, poster_path, release_date, runtime, overview, isWatched)
+            VALUES (:tmdb_id, :title, :poster_path, :release_date, :runtime, :overview, :isWatched)";
+    $request = $this->pdo->prepare($sql);
+    $request->execute([
+        'tmdb_id' => $film->getTmdb_id(),
+        'title' => $film->getTitle(),
+        'poster_path' => $film->getPoster_path(),
+        'release_date' => !empty($film->getRelease_date()) ? substr($film->getRelease_date(), 0, 4) : null,
+        'runtime' => $film->getRuntime(),
+        'overview' => $film->getOverview(),
+        'isWatched' => (int)$film->getIsWatched(),
+    ]);       
+}
+
+public function findByTmdbId(int $tmdbId): ?Film
+{
+    $sql = "SELECT * FROM film WHERE tmdb_id = :tmdb_id";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['tmdb_id' => $tmdbId]);
+    $request->setFetchMode(PDO::FETCH_CLASS, Film::class);
+    return $request->fetch() ?: null;
+}
 }
