@@ -31,6 +31,10 @@
                 📅 <?= $film->getRelease_date() ?> |
                 🕐 <?= $film->getRuntime() ?> min |
                 <?= $film->getIsWatched() ? '👁️ Vu' : '🕒 À voir' ?>
+                <?php if ($film->getRating()) { ?>
+                | ⭐ <?= $film->getRating() ?>/10
+            <?php } ?>
+            
             </p>
         
                 <p class="film-detail-description"><?= htmlspecialchars($film->getDescription() ?? '') ?></p>

@@ -313,6 +313,43 @@ main {
     cursor: pointer;
 }
 
+.form-rating {
+    margin-bottom: 15px;
+}
+
+.form-label {
+    display: block;
+    color: #ffffff;
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.stars-input {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.stars-input input[type='radio'] {
+    display: none;
+}
+
+.stars-input label {
+    font-size: 1rem;
+    cursor: pointer;
+    filter: grayscale(100%);
+    transition: filter 0.2s;
+}
+
+.stars-input input[type="radio"]:checked + label {
+    filter: grayscale(0%);
+}
+
+.stars-input label:hover {
+    filter: grayscale(0%);
+}
+
 .btn-submit {
     background-color: #1A1A2E;
     color: #E94560;
@@ -444,6 +481,8 @@ main {
     padding: 0 10px 10px;
 }
 
+
+
 /* ===== TABLETTE ===== */
 @media (min-width: 480px) {
     .hamburger { 
@@ -494,6 +533,10 @@ main {
     .search-card img { 
         height: auto; 
         object-fit: contain; }
+}
+
+.stars-input label {
+    font-size: 0.9rem;
 }
 
 /* ===== DESKTOP ===== */
@@ -556,5 +599,9 @@ main {
     .search-card:hover { 
         transform: translateY(-6px); 
         box-shadow: 0 10px 30px rgba(233, 69, 96, 0.3); 
+    }
+
+    .stars-input label {
+    font-size: 1.5rem;
     }
 }

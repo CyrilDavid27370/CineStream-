@@ -60,6 +60,7 @@ class MovieController
         $film->setGenre_id(!empty($_POST['genre_id']) ? (int)$_POST['genre_id'] : null);
         $film->setDescription($_POST['description'] ?? null);
         $film->setIsWatched(isset($_POST['isWatched']) ? (bool)$_POST['isWatched'] : false);
+        $film->setRating(isset($_POST['rating']) ? (int)$_POST['rating'] : null);
 
         $this->filmRepository->update($film);
 

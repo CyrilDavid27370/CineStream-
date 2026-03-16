@@ -20,10 +20,6 @@
         <div class="film-detail-info">
     <div class="film-detail-header">
         <h2><?= htmlspecialchars($film->getTitle()) ?></h2>
-        <div class="film-detail-actions">
-            <a href="?route=update&id=<?= $film->getId() ?>">✏️</a>
-            <a href="?route=delete&id=<?= $film->getId() ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?')">❌</a>
-        </div>
     </div>
 
     <p class="film-detail-meta">
@@ -62,7 +58,25 @@
 </div>
 
         <textarea name="description" class="form-textarea" 
-            placeholder="Entrer une note personnalisée"><?= htmlspecialchars($film->getDescription() ?? '') ?></textarea>
+            placeholder="Entrer une note personnalisée"><?= htmlspecialchars($film->getDescription() ?? '') ?>
+        </textarea>
+
+    <div class="form-rating">
+        <label class="form-label">⭐ Note personnelle</label>
+
+        <div class="stars-input">
+
+    <?php for ($i = 1; $i <= 10; $i++) { ?>
+
+        <input type="radio" name="rating" id="star<?= $i ?>" value="<?= $i ?>"
+            <?= $film->getRating() == $i ? 'checked' : '' ?>>
+
+        <label for="star<?= $i ?>">⭐</label>
+
+    <?php } ?>
+    
+</div>
+    </div>    
 
         <button type="submit" class="btn-submit">💾 Modifier</button>
 

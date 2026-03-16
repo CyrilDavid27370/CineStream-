@@ -62,12 +62,13 @@ public function delete($id) {
 
 public function update(Film $film)
 {
-    $sql = "UPDATE film SET genre_id = :genre_id, description = :description, isWatched = :isWatched WHERE id = :id";
+    $sql = "UPDATE film SET genre_id = :genre_id, description = :description, isWatched = :isWatched, rating = :rating WHERE id = :id";
     $request = $this->pdo->prepare($sql);
     $request->execute([
         'genre_id' => $film->getGenre_id(),
         'description' => $film->getDescription(),
         'isWatched' => (int)$film->getIsWatched(),
+        'rating' => $film->getRating(),
         'id' => $film->getId()
     ]);
 }
