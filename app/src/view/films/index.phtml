@@ -17,13 +17,19 @@
     <button><a href="?route=index&filter=towatch">🕒</a></button>
 </div>
 
+<div class="view-toggle">
+    <a href="?route=index&view=grid" class="btn-toggle <?= ($_GET['view'] ?? 'grid') === 'grid' ? 'active' : '' ?>">Vue grille ⊞</a>
+    <a href="?route=index&view=list" class="btn-toggle <?= ($_GET['view'] ?? 'grid') === 'list' ? 'active' : '' ?>">Vue liste ☰</a>
+</div>
+
     <?php  if (empty($films)) { ?>
 
         <p class="empty-message">🎬 Votre vidéothèque est vide. Commencez à constituer votre collection !</p>
 
     <?php } else { ?>
     
-    <div class="films-grid">
+    <div class="films-grid <?= ($_GET['view'] ?? 'grid') === 'list' ? 'list-view' : '' ?>" id="films-container">
+
         <?php foreach ($films as $film) { ?>
             <a href="?route=show&id=<?= $film->getId() ?>" class="card-link">
         

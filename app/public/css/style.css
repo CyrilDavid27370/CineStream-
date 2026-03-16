@@ -374,10 +374,12 @@ main {
     color: #E94560;
     border: 1.5px solid #E94560;
     border-radius: 30px;
-    padding: 8px 20px;
-    font-size: 0.85rem;
+    padding: 12px 50px;
+    font-size: 0.9rem;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
+    background-color: #1A1A2E;
+    margin-top: 10px;
 }
 
 .btn-back:hover {
@@ -481,8 +483,147 @@ main {
     padding: 0 10px 10px;
 }
 
+.genres-container {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.genres-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.genres-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
 
+
+.genres-header h2 {
+    color: #E94560;
+    font-size: 1.5rem;
+}
+
+.genres-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1A1A2E;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.genres-table th {
+    background-color: #E94560;
+    color: #ffffff;
+    padding: 12px 15px;
+    text-align: left;
+    font-size: 0.9rem;
+}
+
+.genres-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #333;
+    font-size: 0.9rem;
+    color: #ffffff;
+}
+
+.genres-table tr:last-child td {
+    border-bottom: none;
+}
+
+.genres-table tr:hover td {
+    background-color: #16213E;
+}
+
+.btn-edit {
+    margin-right: 10px;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.btn-delete {
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.view-toggle {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 15px 10px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+.btn-toggle {
+    background-color: #1A1A2E;
+    color:#ffffff;
+    border: 1.5px solid #E94560;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+}
+
+.btn-toggle.active {
+    background-color: #E94560;
+}
+
+.btn-toggle:hover {
+    background-color: #E94560;
+    color: #ffffff;
+}
+
+#films-container.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    max-width: 1300px;
+    margin: 0 auto;
+}
+
+#films-container.list-view .card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
+    border-radius: 12px;
+}
+
+#films-container.list-view .card img,
+#films-container.list-view .card .no-poster {
+    display: none;
+}
+
+#films-container.list-view .card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 12px;
+}
+
+#films-container.list-view .card-title {
+    font-size: 1rem;
+    white-space: normal;
+    padding: 0;
+}
+
+#films-container.list-view .card-meta {
+    padding: 0;
+    margin-left: 15px;
+
+}
 /* ===== TABLETTE ===== */
 @media (min-width: 480px) {
     .hamburger { 

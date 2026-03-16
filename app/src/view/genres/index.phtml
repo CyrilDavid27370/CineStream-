@@ -1,0 +1,38 @@
+<?php $title = "Gestion des catégories"; ?>
+
+<?php ob_start() ?>
+
+<div class="genres-container">
+    <div class="genres-header">
+        <h2>🎭 Gestion des catégories</h2>
+        <a href="?route=genreCreate" class="btn-submit">➕ Ajouter</a>
+    </div>
+
+    <?php if (!empty($genres)) { ?>
+        <table class="genres-table">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($genres as $genre) { ?>
+                    <tr>
+                        <td><?= htmlspecialchars($genre->getName()) ?></td>
+                        <td>
+                            <a href="?route=genreUpdate&id=<?= $genre->getId() ?>" class="btn-edit">✏️</a>
+                            <a href="?route=genreDelete&id=<?= $genre->getId() ?>" 
+                            onclick="return confirm('Supprimer cette catégorie ?')" class="btn-delete">❌</a>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    <?php } else { ?>
+        <p class="empty-message">🎭 Aucune catégorie disponible.</p>
+    <?php } ?>
+</div>
+
+<?php $content = ob_get_clean() ?>
+<?php require __DIR__ . '/../base.phtml' ?>

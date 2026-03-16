@@ -1,0 +1,21 @@
+<?php $title = "Modifier une catégorie"; ?>
+
+<?php ob_start() ?>
+
+<div class="genres-container">
+    <div class="genres-header">
+        <h2>✏️ Modifier une catégorie</h2>
+    </div>
+
+    <form method="POST" action="?route=genreUpdate&id=<?= $genre->getId() ?>">
+        <input type="text" name="name" class="search-input" 
+            value="<?= htmlspecialchars($genre->getName()) ?>" required>
+        <div class="btn-back-container">
+            <button type="submit" class="btn-submit">💾 Enregistrer</button>
+            <a href="?route=genres" class="btn-back">Annuler</a>
+        </div>
+    </form>
+</div>
+
+<?php $content = ob_get_clean() ?>
+<?php require __DIR__ . '/../base.phtml' ?>

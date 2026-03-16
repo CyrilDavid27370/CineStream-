@@ -29,4 +29,12 @@ if ($route === 'index') {
   $movieController->showTmdb();
 } elseif ($route === 'addFromTmdb') {
   $movieController->addFromTmdb();
+} elseif ($route === 'genres') {
+  $movieController->genres();
+} elseif ($route === 'genreCreate') {
+  $movieController->genreCreate();
+} else if ($route === 'genreUpdate') {
+  $movieController->genreUpdate();
+} elseif ($route === 'genreDelete') {
+  $movieController->genreDelete();
 }

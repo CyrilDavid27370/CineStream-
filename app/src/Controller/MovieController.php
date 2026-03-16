@@ -134,5 +134,66 @@ class MovieController
 
   }
 
+  public function genres() 
+  {
+    $genres = $this->genreRepository->findAll();
+    
+    require __DIR__ . '/../view/genres/index.phtml';
+  }
+
+  public function genreCreate()
+  { 
+    if (isset($_POST['name'])) {
+      
+    if (empty(trim($_POST['name']))) {
+    $_SESSION['flash'] = '⚠️ Le nom ne peut pas être vide !';
+    header('Location: ?route=genreCreate');
+    exit;
 }
+      $existing = $this->genreRepository->findByName($_POST['name']);
+      
+      if ($existing) {
+        $_SESSION['flash'] = '⚠️ Cette catégorie existe déjà !';
+        header('Location: ?route=genres');
+        exit;
+      }
+
+      $genre = new Genre;
+      $genre->setName($_POST['name']);
+      $this->genreRepository->add($genre);
+      $_SESSION['flash'] = '✅ Catégorie ajoutée avec succès !';
+      header('Location: ?route=genres');
+      exit;
+    }
+
+    require __DIR__ . '/../view/genres/create.phtml';
+}
+
+  public function genreUpdate()
+  {
+    $id = (int)$_GET['id'];
+    $genre = $this->genreRepository->findById($id);
+
+    if(isset($_POST['name'])) {
+      $genre->setName($_POST['name']);
+      $this->genreRepository->update($id, $genre);
+      $_SESSION['flash'] = '✅ Catégorie modifiée avec succès !';
+      header('Location: ?route=genres');
+      exit;
+    }
+
+    require __DIR__ . '/../view/genres/update.phtml';
+
+  }
+
+  public function genreDelete()
+  {
+    $id = (int)$_GET['id'];
+    $this->genreRepository->delete($id);
+    $_SESSION['flash'] = '✅ Catégorie supprimée avec succès !';
+    header('Location: ?route=genres');
+    exit;
+  }
+}
+
 

@@ -1,0 +1,20 @@
+<?php $title = "Ajouter une catégorie"; ?>
+
+<?php ob_start() ?>
+
+<div class="genres-container">
+    <div class="genres-header">
+        <h2>Ajouter une catégorie</h2>
+    </div>
+
+    <form method="POST" action="?route=genreCreate">
+        <input type="text" name="name" class="search-input" placeholder="Nom de la catégorie" required>
+        <div class="btn-back-container">
+            <button type="submit" class="btn-submit">💾 Enregistrer</button>
+            <a href="?route=genres" class="btn-back">Annuler</a>
+        </div>
+    </form>
+</div>
+
+<?php $content = ob_get_clean() ?>
+<?php require __DIR__ . '/../base.phtml' ?>
