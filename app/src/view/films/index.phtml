@@ -2,24 +2,38 @@
 
 <?php ob_start() ?>
 
+<?php $view = $_GET['view'] ?? 'grid'; ?>
+
 <div class="filters">
-    <button><a href="?route=index">Tous les films</a></button>
+    <button class="<?= !isset($_GET['genre']) && !isset($_GET['filter']) ? 'active' : '' ?>">
+        <a href="?route=index&view=<?= $view ?>">Tous les films</a>
+    </button>
 
     <?php foreach ($genres as $genre) { ?>
-        <button><a href="?route=index&genre=<?= $genre->getId() ?>">
-            <?= htmlspecialchars($genre->getName()) ?>
-        </a></button>
-
+        <button class="<?= (isset($_GET['genre']) && $_GET['genre'] == $genre->getId()) ? 'active' : '' ?>">
+            <a href="?route=index&genre=<?= $genre->getId() ?>&view=<?= $view ?>">
+                <?= htmlspecialchars($genre->getName()) ?>
+            </a>
+        </button>
     <?php } ?>
 
-    <button><a href="?route=index&genre=nc">n/c</a></button>
-    <button><a href="?route=index&filter=watched">👁️</a></button>
-    <button><a href="?route=index&filter=towatch">🕒</a></button>
+    <button class="<?= (isset($_GET['genre']) && $_GET['genre'] === 'nc') ? 'active' : '' ?>">
+        <a href="?route=index&genre=nc&view=<?= $view ?>">n/c</a>
+    </button>
+
+    <button class="<?= (isset($_GET['filter']) && $_GET['filter'] === 'watched') ? 'active' : '' ?>">
+        <a href="?route=index&filter=watched&view=<?= $view ?>">👁️</a>
+    </button>
+
+    <button class="<?= (isset($_GET['filter']) && $_GET['filter'] === 'towatch') ? 'active' : '' ?>">
+        <a href="?route=index&filter=towatch&view=<?= $view ?>">🕒</a>
+    </button>
 </div>
 
+
 <div class="view-toggle">
-    <a href="?route=index&view=grid" class="btn-toggle <?= ($_GET['view'] ?? 'grid') === 'grid' ? 'active' : '' ?>">Vue grille ⊞</a>
-    <a href="?route=index&view=list" class="btn-toggle <?= ($_GET['view'] ?? 'grid') === 'list' ? 'active' : '' ?>">Vue liste ☰</a>
+    <a href="?route=index&view=grid" class="btn-toggle <?= $view === 'grid' ? 'active' : '' ?>">Vue grille ⊞</a>
+    <a href="?route=index&view=list" class="btn-toggle <?= $view === 'list' ? 'active' : '' ?>">Vue liste ☰</a>
 </div>
 
     <?php  if (empty($films)) { ?>
@@ -28,7 +42,7 @@
 
     <?php } else { ?>
     
-    <div class="films-grid <?= ($_GET['view'] ?? 'grid') === 'list' ? 'list-view' : '' ?>" id="films-container">
+        <div class="films-grid <?= $view === 'list' ? 'list-view' : '' ?>" id="films-container">
 
         <?php foreach ($films as $film) { ?>
             <a href="?route=show&id=<?= $film->getId() ?>" class="card-link">

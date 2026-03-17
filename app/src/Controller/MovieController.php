@@ -99,6 +99,7 @@ class MovieController
   public function showTmdb()
   {
     $film = $this->tmdb->getFilmByTmdbId((int)$_GET['id']);
+    $trailerKey = $this->tmdb->getTrailerKeyByTmdbId((int)$_GET['id']);
 
     require __DIR__ . '/../view/films/showTmdb.phtml';
 

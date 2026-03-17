@@ -33,15 +33,38 @@
       </div>
 
       <div class="film-detail-meta">
-        ⭐ <?= number_format($film['vote_average'] ?? 0, 1) ?>/10
-        (<?= number_format($film['vote_count'] ?? 0) ?> votes)
-      </div>
+        ⭐ <span class="rating">
+
+        <?= number_format($film['vote_average'] ?? 0, 1) ?>/10
+
+            </span>
+
+  (<?= number_format($film['vote_count'] ?? 0) ?> votes)
+  
+</div>
     </div>
   </div>
 
   <div class="film-detail-overview">
     <p><?= !empty($film['overview']) ? htmlspecialchars($film['overview']) : 'Aucun synopsis disponible' ?></p>
   </div>
+
+    <?php if (!empty($trailerKey)) {?>
+
+    <div class="film-trailer">
+      <h3>🎬 Bande-annonce</h3>
+
+      <iframe 
+              src="https://www.youtube.com/embed/<?= htmlspecialchars($trailerKey) ?>"
+              title="Bande-annonce de <?= htmlspecialchars($film['title'] ?? 'ce film') ?>" 
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+      </iframe>
+
+    </div>
+
+    <?php } ?>
 
 </div>
 

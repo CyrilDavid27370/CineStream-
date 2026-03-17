@@ -34,4 +34,25 @@ class Tmdb
         $response = file_get_contents($url);
         return json_decode($response, true);
     }
+
+    public function getTrailerKeyByTmdbId($id) : ?string
+    {
+        $data = $this->tmdb_get('/movie/' . $id . '/videos');
+
+        if (empty($data['results'])) {
+            return null;
+        }
+
+        foreach ($data['results'] as $video) {
+        if (
+            isset($video['site'], $video['type'], $video['key']) &&
+            $video['site'] === 'YouTube' &&
+            $video['type'] === 'Trailer'
+        ) {
+            return $video['key'];
+        }
+    }
+
+    return null;
+    }
 }
