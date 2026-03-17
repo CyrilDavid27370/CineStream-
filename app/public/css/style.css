@@ -355,18 +355,28 @@ main {
     filter: grayscale(0%);
 }
 
+.btn-submit,
+.btn-back {
+    width: 240px;
+    text-align: center;
+}
+
 .btn-submit {
     background-color: #1A1A2E;
     color: #E94560;
     border: 1.5px solid #E94560;
     border-radius: 30px;
-    padding: 10px 25px;
+    padding: 12px 40px;
     font-size: 0.9rem;
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-    display: block;
     margin: 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-decoration: none;
 }
 
 .btn-submit:hover {
@@ -379,7 +389,7 @@ main {
     color: #E94560;
     border: 1.5px solid #E94560;
     border-radius: 30px;
-    padding: 12px 50px;
+    padding: 12px 40px;
     font-size: 0.9rem;
     text-decoration: none;
     transition: background-color 0.3s, color 0.3s;
@@ -395,6 +405,12 @@ main {
 .btn-back-container {
     text-align: center;
     margin-top: 20px;
+}
+
+#star0 + label {
+    font-size: 1.5rem;
+    margin-right: 8px;
+    cursor: pointer;
 }
 
 .flash-message {
@@ -503,14 +519,22 @@ main {
 
 .genres-header {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 
+.genres-header .search-input {
+    width: 100%;
+    max-width: 350px;
+    margin-bottom: 0;
+}
+
 
 .genres-header h2 {
+    text-align: center;
     color: #E94560;
     font-size: 1.5rem;
 }
@@ -821,6 +845,12 @@ main {
         max-width: 100%;
         display: block;
         margin: 0 auto;
+    }
+
+    .genres-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
     }
 
 }
