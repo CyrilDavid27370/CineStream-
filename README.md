@@ -174,21 +174,21 @@ Interface développée en mobile first.
 
 🧠 Compétences mobilisées
 
- . Architecture MVC
+ - Architecture MVC
 
- . POO en PHP
+ - POO en PHP
 
- . CRUD complet
+ -  CRUD complet
 
- . API REST (TMDB)
+ - API REST (TMDB)
 
- . Dockerisation d’une application
+ - Dockerisation d’une application
 
- . Responsive design
+ - Responsive design
 
- . Autoload PSR-4 (Composer)
+ - Autoload PSR-4 (Composer)
 
 ## 👨‍💻 Auteur
 
 **Cyril DAVID** — Formation DWWM — Hunik Academy  
-Projet réalisé dans le cadre du titre professionnel Développeur Web et Web Mobile (niveau 5)
+Projet réalisé dans le cadre du titre professionnel Développeur Web et Web Mobile (niveau 5).
