@@ -187,4 +187,19 @@ public function addFromTmdb()
     header('Location: ?route=index');
     exit;
 }
+    public function searchApi(): void
+{
+    header('Content-Type: application/json');
+
+    $query = trim($_GET['query'] ?? '');
+
+    if (empty($query)) {
+        echo json_encode([]);
+        exit;
+    }
+
+    $results = $this->tmdb->getFilmByTmdbSearch($query);
+    echo json_encode($results['results'] ?? []);
+    exit;
+}
 }

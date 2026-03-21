@@ -28,6 +28,12 @@ if ($route === 'register') {
     exit;
 }
 
+if ($route === 'searchApi') {
+    $movieController = new MovieController();
+    $movieController->searchApi();
+    exit;
+}
+
 // Protection globale — redirige vers login si pas connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: ?route=login');

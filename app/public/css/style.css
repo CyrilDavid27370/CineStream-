@@ -871,6 +871,13 @@ main {
     margin-top: 2px;
 }
 
+.search-loader {
+    text-align: center;
+    color: #888888;
+    font-size: 0.9rem;
+    padding: 20px;
+}
+
 /* ===== TABLETTE ===== */
 
 @media (min-width: 480px) {
