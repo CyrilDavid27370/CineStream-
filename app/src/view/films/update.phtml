@@ -18,77 +18,69 @@
         </div>
 
         <div class="film-detail-info">
-    <div class="film-detail-header">
-        <h2><?= htmlspecialchars($film->getTitle()) ?></h2>
-    </div>
+            <div class="film-detail-header">
+                <h2><?= htmlspecialchars($film->getTitle()) ?></h2>
+            </div>
 
-    <p class="film-detail-meta">
-        📅 <?= $film->getRelease_date() ?> |
-        🕐 <?= $film->getRuntime() ?> min |
-        <?= htmlspecialchars($film->getGenre_name() ?? 'n/c') ?>
-    </p>
+            <p class="film-detail-meta">
+                📅 <?= $film->getRelease_date() ?> |
+                🕐 <?= $film->getRuntime() ?> min |
+                <?= htmlspecialchars($film->getGenre_name() ?? 'n/c') ?>
+            </p>
 
-    <form method="POST" action="?route=update&id=<?= $film->getId() ?>">
+            <form id="edit-form" method="POST" action="?route=update&id=<?= $film->getId() ?>">
 
-    <div class="form-genre-row">
-    <select name="genre_id" class="form-select">
-        <option value="">-- Choisir un genre personnalisé --</option>
+                <div class="form-genre-row">
+                    <select name="genre_id" class="form-select">
+                        <option value="">-- Choisir un genre personnalisé --</option>
 
-        <?php foreach ($genres as $genre) { ?>
+                        <?php foreach ($genres as $genre) { ?>
+                            <option value="<?= $genre->getId() ?>" 
+                                <?= $film->getGenre_id() == $genre->getId() ? 'selected' : '' ?>>
+                                <?= htmlspecialchars($genre->getName()) ?>
+                            </option>
+                        <?php } ?>
+                    </select>
 
-            <option value="<?= $genre->getId() ?>" 
-                <?= $film->getGenre_id() == $genre->getId() ? 'selected' : '' ?>>
-                <?= htmlspecialchars($genre->getName()) ?>
-            </option>
+                    <div class="form-radio">
+                        <label>
+                            <input type="radio" name="isWatched" value="0" 
+                                <?= !$film->getIsWatched() ? 'checked' : '' ?>> 🕒 
+                        </label>
+                        <label>
+                            <input type="radio" name="isWatched" value="1" 
+                                <?= $film->getIsWatched() ? 'checked' : '' ?>> 👁️
+                        </label>
+                    </div>
+                </div>
 
-        <?php } ?>
-        
-    </select>
+                <textarea name="description" class="form-textarea" 
+                    placeholder="Entrer une note personnalisée"><?= htmlspecialchars($film->getDescription() ?? '') ?>
+                </textarea>
 
-    <div class="form-radio">
-        <label>
-            <input type="radio" name="isWatched" value="0" 
-                <?= !$film->getIsWatched() ? 'checked' : '' ?>> 🕒 
-        </label>
-        <label>
-            <input type="radio" name="isWatched" value="1" 
-                <?= $film->getIsWatched() ? 'checked' : '' ?>> 👁️
-        </label>
-    </div>
-</div>
+                <div class="form-rating">
+                    <label class="form-label rating-label">⭐ Note personnelle</label>
 
-        <textarea name="description" class="form-textarea" 
-            placeholder="Entrer une note personnalisée"><?= htmlspecialchars($film->getDescription() ?? '') ?>
-        </textarea>
+                    <div class="stars-input">
+                        <input type="radio" name="rating" id="star0" value="0"
+                            <?= ($film->getRating() ?? 0) == 0 ? 'checked' : '' ?>>
+                        <label for="star0">❌</label>
 
-    <div class="form-rating">
-        <label class="form-label rating-label">⭐ Note personnelle</label>
+                        <?php for ($i = 1; $i <= 10; $i++) { ?>
+                            <input type="radio" name="rating" id="star<?= $i ?>" value="<?= $i ?>"
+                                <?= $film->getRating() == $i ? 'checked' : '' ?>>
+                            <label for="star<?= $i ?>">⭐</label>
+                        <?php } ?>
+                    </div>
+                </div>
 
-        <div class="stars-input">
+            </form>
 
-            <input type="radio" name="rating" id="star0" value="0"
+            <!-- ✅ Bouton ici : dans film-detail-info, hors du form -->
+            <button type="submit" form="edit-form" class="btn-submit">💾 Modifier</button>
 
-                <?= ($film->getRating() ?? 0) == 0 ? 'checked' : '' ?>>
-
-            <label for="star0">❌</label>
-
-                <?php for ($i = 1; $i <= 10; $i++) { ?>
-
-        <input type="radio" name="rating" id="star<?= $i ?>" value="<?= $i ?>"
-            <?= $film->getRating() == $i ? 'checked' : '' ?>>
-
-        <label for="star<?= $i ?>">⭐</label>
-
-    <?php } ?>
-
-</div>
-    </div>    
-
-        <button type="submit" class="btn-submit">💾 Modifier</button>
-
-    </form>
-</div>
-    </div>
+        </div> <!-- fin film-detail-info -->
+    </div> <!-- fin film-detail-top -->
 
     <div class="film-detail-overview">
         <p><?= htmlspecialchars($film->getOverview()) ?></p>
@@ -96,11 +88,8 @@
 </div>
 
 <div class="btn-back-container">
-
     <a href="?route=show&id=<?= $film->getId() ?>" class="btn-back">Retour à la page précédente</a>
-
 </div>
 
 <?php $content = ob_get_clean() ?>
 <?php require __DIR__ . '/../base.phtml' ?>
-
