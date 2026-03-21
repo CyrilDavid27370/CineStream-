@@ -237,4 +237,25 @@ public function addFromTmdb()
     exit;
 }
 
+public function filmsApi(): void
+{
+    header('Content-Type: application/json');
+
+    $films = $this->filmRepository->findAll($this->userId);
+
+    $data = array_map(function($film) {
+        return [
+            'id'           => $film->getId(),
+            'title'        => $film->getTitle(),
+            'poster_path'  => $film->getPoster_path(),
+            'release_date' => $film->getRelease_date(),
+            'genre_id'     => $film->getGenre_id(),
+            'isWatched'    => $film->getIsWatched(),
+        ];
+    }, $films);
+
+    echo json_encode($data);
+    exit;
+}
+
 }
