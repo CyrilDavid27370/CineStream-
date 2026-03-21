@@ -202,4 +202,39 @@ public function addFromTmdb()
     echo json_encode($results['results'] ?? []);
     exit;
 }
+
+  public function addFromTmdbApi(): void
+{
+    header('Content-Type: application/json');
+
+    $tmdbId = (int)($_GET['id'] ?? 0);
+
+    if (!$tmdbId) {
+        echo json_encode(['success' => false, 'message' => 'ID invalide.']);
+        exit;
+    }
+
+    $existingFilm = $this->filmRepository->findByTmdbId($tmdbId, $this->userId);
+    if ($existingFilm) {
+        echo json_encode(['success' => false, 'message' => '⚠️ Film déjà dans votre vidéothèque !']);
+        exit;
+    }
+
+    $filmData = $this->tmdb->getFilmByTmdbId($tmdbId);
+
+    $film = new Film();
+    $film->setTmdb_id($filmData['id']);
+    $film->setTitle($filmData['title']);
+    $film->setPoster_path($filmData['poster_path']);
+    $film->setRelease_date(!empty($filmData['release_date']) ? $filmData['release_date'] : null);
+    $film->setRuntime($filmData['runtime'] ?? 0);
+    $film->setOverview($filmData['overview'] ?: '');
+    $film->setIsWatched(false);
+
+    $this->filmRepository->add($film, $this->userId);
+
+    echo json_encode(['success' => true, 'message' => '✅ Film ajouté à la vidéothèque !']);
+    exit;
+}
+
 }

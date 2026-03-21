@@ -34,6 +34,12 @@ if ($route === 'searchApi') {
     exit;
 }
 
+if ($route === 'addFromTmdbApi') {
+    $movieController = new MovieController();
+    $movieController->addFromTmdbApi();
+    exit;
+}
+
 // Protection globale — redirige vers login si pas connecté
 if (!isset($_SESSION['user_id'])) {
     header('Location: ?route=login');

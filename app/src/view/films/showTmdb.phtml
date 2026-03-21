@@ -18,9 +18,10 @@
       <div class="film-detail-header">
         <h2><?= htmlspecialchars($film['title']) ?></h2>
         <div class="film-detail-actions">
-          <a href="?route=addFromTmdb&id=<?= (int)$film['id'] ?>">➕</a>
+            <button id="btn-add" class="btn-add" data-id="<?= (int)$film['id'] ?>">➕</button>
         </div>
-      </div>
+          <div id="toast" class="toast" style="display:none;"></div>
+    </div>
 
       <div class="film-detail-meta">
         📅 <?= substr($film['release_date'] ?? 'n/c', 0, 4) ?>
@@ -71,6 +72,49 @@
 <div class="btn-back-container">
   <a href="?route=search&query=<?= urlencode($_GET['query'] ?? '') ?>" class="btn-back">Retour à la page précédente</a>
 </div>
+
+<script>
+const btnAdd = document.getElementById('btn-add');
+const toast = document.getElementById('toast');
+
+btnAdd.addEventListener('click', async function() {
+    const tmdbId = this.dataset.id;
+
+    // Désactive le bouton pendant la requête
+    btnAdd.disabled = true;
+    btnAdd.textContent = '⏳';
+
+    try {
+        const response = await fetch(`?route=addFromTmdbApi&id=${tmdbId}`);
+        const data = await response.json();
+
+        showToast(data.message, data.success ? 'success' : 'warning');
+
+        if (data.success) {
+            btnAdd.textContent = '✅';
+        } else {
+            btnAdd.disabled = false;
+            btnAdd.textContent = '➕';
+        }
+
+    } catch (error) {
+        showToast('❌ Erreur lors de l\'ajout.', 'error');
+        btnAdd.disabled = false;
+        btnAdd.textContent = '➕';
+    }
+});
+
+function showToast(message, type) {
+    toast.textContent = message;
+    toast.className = `toast toast-${type}`;
+    toast.style.display = 'block';
+
+    setTimeout(() => {
+        toast.style.display = 'none';
+    }, 3000);
+}
+</script>
+
 <?php $content = ob_get_clean() ?>
 
 <?php require __DIR__ . '/../base.phtml' ?>
