@@ -1,9 +1,20 @@
 <nav>
-        <input type="checkbox" id="nav-toggle">
-        <label class="hamburger" for="nav-toggle">☰</label>
-        <ul id="nav-menu">
-            <li><a href="?route=index">📼 <span class="label">VIDÉOTHEQUE</span></a></li>
-            <li><a href="?route=search">🔍 <span class="label">RECHERCHE</span></a></li>
-            <li><a href="?route=genres">🎭 <span class="label">CATÉGORIES</span></a></li>
-        </ul>
+    <input type="checkbox" id="nav-toggle">
+    <label class="hamburger" for="nav-toggle">☰</label>
+    <ul id="nav-menu">
+        <?php if (isset($_SESSION['user_id'])) { ?>
+            <div class="nav-links">
+                <li><a href="?route=index">📼 <span class="label">VIDÉOTHÈQUE</span></a></li>
+                <li><a href="?route=search">🔍 <span class="label">RECHERCHE</span></a></li>
+                <li><a href="?route=genres">🎭 <span class="label">CATÉGORIES</span></a></li>
+            </div>
+            <li class="nav-user">
+                <span class="user-email">👤 <?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></span>
+                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') { ?>
+                    <span class="badge-admin">ADMIN</span>
+                <?php } ?>
+                <a href="?route=logout" class="btn-logout">🚪 <span class="label">DÉCONNEXION</span></a>
+            </li>
+        <?php } ?>
+    </ul>
 </nav>

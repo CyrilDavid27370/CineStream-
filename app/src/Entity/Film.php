@@ -16,6 +16,7 @@ class Film
   private $isWatched;
   private $genre_name;
   private $rating;
+  private $user_id;
 
   /**
    * Get the value of id
@@ -253,6 +254,26 @@ class Film
   public function setRating($rating)
   {
     $this->rating = $rating;
+
+    return $this;
+  }
+
+  /**
+   * Get the value of user_id
+   */ 
+  public function getUser_id()
+  {
+    return $this->user_id;
+  }
+
+  /**
+   * Set the value of user_id
+   *
+   * @return  self
+   */ 
+  public function setUser_id($user_id)
+  {
+    $this->user_id = $user_id;
 
     return $this;
   }

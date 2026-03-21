@@ -13,50 +13,51 @@ class MovieController
   private $genreRepository;
   private $filmRepository;
   private $tmdb;
+  private $userId;
 
   public function __construct()
   {
     $this->genreRepository = new GenreRepository;
     $this->filmRepository = new FilmRepository;
     $this->tmdb = new Tmdb;
+    $this->userId = (int)$_SESSION['user_id'];
   }
   
-  public function index() 
-  {
+  public function index()
+{
     $genres = $this->genreRepository->findAll();
 
-  if (isset($_GET['genre'])) {
-    if ($_GET['genre'] === 'nc') {
-        $films = $this->filmRepository->findByNoGenre();
+    if (isset($_GET['genre'])) {
+        if ($_GET['genre'] === 'nc') {
+            $films = $this->filmRepository->findByNoGenre($this->userId);
+        } else {
+            $films = $this->filmRepository->findByGenre((int)$_GET['genre'], $this->userId);
+        }
+    } elseif (isset($_GET['filter']) && $_GET['filter'] === 'watched') {
+        $films = $this->filmRepository->findByWatched(true, $this->userId);
+    } elseif (isset($_GET['filter']) && $_GET['filter'] === 'towatch') {
+        $films = $this->filmRepository->findByWatched(false, $this->userId);
     } else {
-        $films = $this->filmRepository->findByGenre((int)$_GET['genre']);
+        $films = $this->filmRepository->findAll($this->userId);
     }
 
-    } elseif (isset($_GET['filter']) && $_GET['filter'] === 'watched') {
-    $films = $this->filmRepository->findByWatched(true);
-    } elseif (isset($_GET['filter']) && $_GET['filter'] === 'towatch') {
-    $films = $this->filmRepository->findByWatched(false);
-    } else {
-    $films = $this->filmRepository->findAll();
-}
     require __DIR__ . '/../view/films/index.phtml';
-  }
+}
 
-  public function show()
-  {
+public function show()
+{
     $id = (int)$_GET['id'];
     $film = $this->filmRepository->findById($id);
-
     require __DIR__ . '/../view/films/show.phtml';
-  }
+}
 
-  public function update()
-  {
-      $id = (int)$_GET['id'];
-      $film = $this->filmRepository->findById($id);
-      $genres = $this->genreRepository->findAll();
+public function update()
+{
+    $id = (int)$_GET['id'];
+    $film = $this->filmRepository->findById($id);
+    $genres = $this->genreRepository->findAll();
 
-      if(isset($_POST['genre_id'])) {
+    if (isset($_POST['genre_id'])) {
         $film->setGenre_id(!empty($_POST['genre_id']) ? (int)$_POST['genre_id'] : null);
         $film->setDescription($_POST['description'] ?? null);
         $film->setIsWatched(isset($_POST['isWatched']) ? (bool)$_POST['isWatched'] : false);
@@ -65,136 +66,125 @@ class MovieController
         $this->filmRepository->update($film);
 
         $_SESSION['flash'] = '✅ Film modifié avec succès !';
-
         header('Location: ?route=show&id=' . $id);
         exit;
-      }
+    }
 
-        require __DIR__ . '/../view/films/update.phtml';
-        
-  }
+    require __DIR__ . '/../view/films/update.phtml';
+}
 
-  public function delete()
-  {
+public function delete()
+{
     $id = (int)$_GET['id'];
     $this->filmRepository->delete($id);
-
-    header('location: ?route=index');
+    header('Location: ?route=index');
     exit;
-  }
-  
-  public function search()
-  {
+}
+
+public function search()
+{
     $films = [];
 
-    if(isset($_GET['query']) && !empty($_GET['query'])) {
-      $results = $this->tmdb->getFilmByTmdbSearch($_GET['query']);
-      $films = $results['results'];
+    if (isset($_GET['query']) && !empty($_GET['query'])) {
+        $results = $this->tmdb->getFilmByTmdbSearch($_GET['query']);
+        $films = $results['results'];
     }
 
     require __DIR__ . '/../view/films/search.phtml';
+}
 
-  }
-
-  public function showTmdb()
-  {
+public function showTmdb()
+{
     $film = $this->tmdb->getFilmByTmdbId((int)$_GET['id']);
     $trailerKey = $this->tmdb->getTrailerKeyByTmdbId((int)$_GET['id']);
-
     require __DIR__ . '/../view/films/showTmdb.phtml';
-
-  }
-
-  public function addFromTmdb() 
-  {
-    $tmdbId = (int)$_GET['id'];
-
-    $existingFilm = $this->filmRepository->findByTmdbId($tmdbId);
-      if ($existingFilm) {
-          $_SESSION['flash'] = '⚠️ Ce film est déjà dans votre vidéothèque !';
-        header('Location: ?route=show&id=' . $existingFilm->getId());
-        exit;
-    }
-    $filmData = $this->tmdb->getFilmByTmdbId($tmdbId);
-
-    $film = new Film;
-    $film->setTmdb_id($filmData['id']);
-    $film->setTitle($filmData['title']);
-    $film->setPoster_path($filmData['poster_path']);
-    $film->setRelease_date(!empty($filmData['release_date']) ? $filmData['release_date'] : null);
-    $film->setRuntime($filmData['runtime'] ?? 0);
-    $film->setOverview($filmData['overview'] ? : '');
-    $film->setIsWatched(false);
-
-    $this->filmRepository->add($film);
-
-    $_SESSION['flash'] = '✅ Film ajouté à la vidéothèque !';
-
-    header('Location: ?route=index');
-    exit;
-
-  }
-
-  public function genres() 
-  {
-    $genres = $this->genreRepository->findAll();
-    
-    require __DIR__ . '/../view/genres/index.phtml';
-  }
-
-  public function genreCreate()
-  { 
-    if (isset($_POST['name'])) {
-      
-    if (empty(trim($_POST['name']))) {
-    $_SESSION['flash'] = '⚠️ Le nom ne peut pas être vide !';
-    header('Location: ?route=genreCreate');
-    exit;
 }
-      $existing = $this->genreRepository->findByName($_POST['name']);
-      
-      if ($existing) {
-        $_SESSION['flash'] = '⚠️ Cette catégorie existe déjà !';
+
+public function genres()
+{
+    $genres = $this->genreRepository->findAll();
+    require __DIR__ . '/../view/genres/index.phtml';
+}
+
+public function genreCreate()
+{
+    if (isset($_POST['name'])) {
+        if (empty(trim($_POST['name']))) {
+            $_SESSION['flash'] = '⚠️ Le nom ne peut pas être vide !';
+            header('Location: ?route=genreCreate');
+            exit;
+        }
+
+        $existing = $this->genreRepository->findByName($_POST['name']);
+
+        if ($existing) {
+            $_SESSION['flash'] = '⚠️ Cette catégorie existe déjà !';
+            header('Location: ?route=genres');
+            exit;
+        }
+
+        $genre = new Genre();
+        $genre->setName($_POST['name']);
+        $this->genreRepository->add($genre);
+        $_SESSION['flash'] = '✅ Catégorie ajoutée avec succès !';
         header('Location: ?route=genres');
         exit;
-      }
-
-      $genre = new Genre;
-      $genre->setName($_POST['name']);
-      $this->genreRepository->add($genre);
-      $_SESSION['flash'] = '✅ Catégorie ajoutée avec succès !';
-      header('Location: ?route=genres');
-      exit;
     }
 
     require __DIR__ . '/../view/genres/create.phtml';
 }
 
-  public function genreUpdate()
-  {
+public function genreUpdate()
+{
     $id = (int)$_GET['id'];
     $genre = $this->genreRepository->findById($id);
 
-    if(isset($_POST['name'])) {
-      $genre->setName($_POST['name']);
-      $this->genreRepository->update($id, $genre);
-      $_SESSION['flash'] = '✅ Catégorie modifiée avec succès !';
-      header('Location: ?route=genres');
-      exit;
+    if (isset($_POST['name'])) {
+        $genre->setName($_POST['name']);
+        $this->genreRepository->update($id, $genre);
+        $_SESSION['flash'] = '✅ Catégorie modifiée avec succès !';
+        header('Location: ?route=genres');
+        exit;
     }
 
     require __DIR__ . '/../view/genres/update.phtml';
+}
 
-  }
-
-  public function genreDelete()
-  {
+public function genreDelete()
+{
     $id = (int)$_GET['id'];
     $this->genreRepository->delete($id);
     $_SESSION['flash'] = '✅ Catégorie supprimée avec succès !';
     header('Location: ?route=genres');
     exit;
-  }
 }
 
+public function addFromTmdb()
+{
+    $tmdbId = (int)$_GET['id'];
 
+    $existingFilm = $this->filmRepository->findByTmdbId($tmdbId, $this->userId);
+    if ($existingFilm) {
+        $_SESSION['flash'] = '⚠️ Ce film est déjà dans votre vidéothèque !';
+        header('Location: ?route=show&id=' . $existingFilm->getId());
+        exit;
+    }
+
+    $filmData = $this->tmdb->getFilmByTmdbId($tmdbId);
+
+    $film = new Film();
+    $film->setTmdb_id($filmData['id']);
+    $film->setTitle($filmData['title']);
+    $film->setPoster_path($filmData['poster_path']);
+    $film->setRelease_date(!empty($filmData['release_date']) ? $filmData['release_date'] : null);
+    $film->setRuntime($filmData['runtime'] ?? 0);
+    $film->setOverview($filmData['overview'] ?: '');
+    $film->setIsWatched(false);
+
+    $this->filmRepository->add($film, $this->userId);
+
+    $_SESSION['flash'] = '✅ Film ajouté à la vidéothèque !';
+    header('Location: ?route=index');
+    exit;
+}
+}
