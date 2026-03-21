@@ -10,21 +10,21 @@ use Cine\App\Service\Tmdb\Tmdb;
 
 class MovieController
 {
-  private $genreRepository;
-  private $filmRepository;
-  private $tmdb;
-  private $userId;
+    private $genreRepository;
+    private $filmRepository;
+    private $tmdb;
+    private $userId;
 
-  public function __construct()
-  {
+    public function __construct()
+    {
     $this->genreRepository = new GenreRepository;
     $this->filmRepository = new FilmRepository;
     $this->tmdb = new Tmdb;
     $this->userId = (int)$_SESSION['user_id'];
-  }
-  
-  public function index()
-{
+    }
+    
+    public function index()
+    {
     $genres = $this->genreRepository->findAll();
 
     if (isset($_GET['genre'])) {
@@ -48,6 +48,13 @@ public function show()
 {
     $id = (int)$_GET['id'];
     $film = $this->filmRepository->findById($id);
+
+    if (!$film) {
+        header('Location: ?route=index');
+        exit;
+    }
+
+    $this->checkFilmOwnership($film);
     require __DIR__ . '/../view/films/show.phtml';
 }
 
@@ -56,6 +63,13 @@ public function update()
     $id = (int)$_GET['id'];
     $film = $this->filmRepository->findById($id);
     $genres = $this->genreRepository->findAll();
+
+    if (!$film) {
+        header('Location: ?route=index');
+        exit;
+    }
+
+    $this->checkFilmOwnership($film);
 
     if (isset($_POST['genre_id'])) {
         $film->setGenre_id(!empty($_POST['genre_id']) ? (int)$_POST['genre_id'] : null);
@@ -76,6 +90,15 @@ public function update()
 public function delete()
 {
     $id = (int)$_GET['id'];
+    $film = $this->filmRepository->findById($id);
+
+    if (!$film) {
+        header('Location: ?route=index');
+        exit;
+    }
+
+    $this->checkFilmOwnership($film);
+
     $this->filmRepository->delete($id);
     header('Location: ?route=index');
     exit;
@@ -203,8 +226,8 @@ public function addFromTmdb()
     exit;
 }
 
-  public function addFromTmdbApi(): void
-{
+    public function addFromTmdbApi(): void
+    {
     header('Content-Type: application/json');
 
     $tmdbId = (int)($_GET['id'] ?? 0);
@@ -237,8 +260,8 @@ public function addFromTmdb()
     exit;
 }
 
-public function filmsApi(): void
-{
+    public function filmsApi(): void
+    {
     header('Content-Type: application/json');
 
     $films = $this->filmRepository->findAll($this->userId);
@@ -256,6 +279,14 @@ public function filmsApi(): void
 
     echo json_encode($data);
     exit;
+}  
+private function checkFilmOwnership(Film $film): void
+{
+    if ($_SESSION['user_role'] !== 'admin' && $film->getUser_id() !== $this->userId) {
+        $_SESSION['flash'] = '⛔ Vous n\'êtes pas autorisé à accéder à ce film.';
+        header('Location: ?route=index');
+        exit;
+    }
 }
 
 }
