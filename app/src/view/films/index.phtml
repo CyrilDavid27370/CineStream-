@@ -33,8 +33,16 @@ let currentView = '<?= $view ?>';
 
 // Charge tous les films au démarrage
 async function loadFilms() {
+    const container = document.getElementById('films-container');
+    
+    container.innerHTML = `
+        <div class="films-loader">
+            <span></span><span></span><span></span>
+        </div>
+    `;
+
     try {
-        const response = await fetch('?route=filmsApi');
+        const response = await fetch('<?= "http://{$_SERVER['HTTP_HOST']}/?route=filmsApi" ?>');
         allFilms = await response.json();
         renderFilms(allFilms);
     } catch (error) {
@@ -43,6 +51,7 @@ async function loadFilms() {
 }
 
 // Génère les cartes HTML
+
 function renderFilms(films) {
     const container = document.getElementById('films-container');
     const emptyMessage = document.getElementById('empty-message');
@@ -54,8 +63,8 @@ function renderFilms(films) {
     }
 
     emptyMessage.style.display = 'none';
-    container.innerHTML = films.map(film => `
-        <a href="?route=show&id=${film.id}" class="card-link">
+    container.innerHTML = films.map((film, index) => `
+        <a href="?route=show&id=${film.id}" class="card-link" style="animation-delay: ${index * 0.05}s">
             <div class="card">
                 ${film.poster_path
                     ? `<img src="${imageBaseUrl}${film.poster_path}" alt="${escapeHtml(film.title)}">`

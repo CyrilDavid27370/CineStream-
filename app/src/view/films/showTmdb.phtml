@@ -103,16 +103,20 @@ btnAdd.addEventListener('click', async function() {
         btnAdd.textContent = '➕';
     }
 });
-
-function showToast(message, type) {
+  function showToast(message, type) {
     toast.textContent = message;
     toast.className = `toast toast-${type}`;
     toast.style.display = 'block';
 
     setTimeout(() => {
-        toast.style.display = 'none';
-    }, 3000);
+        toast.classList.add('hide');
+        setTimeout(() => {
+            toast.style.display = 'none';
+            toast.classList.remove('hide');
+        }, 300);
+    }, 2700);
 }
+
 </script>
 
 <?php $content = ob_get_clean() ?>

@@ -213,6 +213,8 @@ main {
 .card-link {
     text-decoration: none;
     color: inherit;
+    animation: fadeInUp 0.4s ease both !important;
+    display: block;
 }
 
 .film-detail {
@@ -300,6 +302,32 @@ main {
     line-height: 1.6;
     border-top: 1px solid #333;
     padding-top: 15px;
+}
+
+.films-loader {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 8px;
+}
+
+.films-loader span {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    background: #E94560;
+    border-radius: 50%;
+    animation: bounce 0.8s infinite alternate;
+}
+
+.films-loader span:nth-child(2) { animation-delay: 0.2s; }
+.films-loader span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    from { transform: translateY(0); opacity: 0.4; }
+    to   { transform: translateY(-10px); opacity: 1; }
 }
 
 .form-select {
@@ -844,7 +872,7 @@ main {
     margin-bottom: 16px;
     text-align: center;
 }
- 
+
 .login-link {
     text-align: center;
     margin-top: 16px;
@@ -878,7 +906,6 @@ main {
     padding: 20px;
 }
 
-/* Mobile */
 .btn-add {
     background: none;
     border: none;
@@ -927,6 +954,59 @@ main {
     color: #E94560;
     border: 1px solid #E94560;
 }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes slideDown {
+    from { opacity: 1; transform: translateX(-50%) translateY(0); }
+    to   { opacity: 0; transform: translateX(-50%) translateY(20px); }
+}
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 999;
+    text-align: center;
+    min-width: 260px;
+    animation: slideUp 0.3s ease forwards;
+}
+
+.toast.hide {
+    animation: slideDown 0.3s ease forwards;
+}
+
+.toast-success {
+    background: #1A3A1A;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+}
+
+.toast-warning {
+    background: rgba(233, 69, 96, 0.15);
+    color: #E94560;
+    border: 1px solid #E94560;
+}
+
+.toast-error {
+    background: #3A1A1A;
+    color: #E94560;
+    border: 1px solid #E94560;
+}
+
 
 /* ===== TABLETTE ===== */
 
@@ -1217,7 +1297,6 @@ main {
         font-size: 0.75rem;
     }
 
-    @media (min-width: 900px) {
     #nav-menu {
         display: flex;
         flex-direction: row;
@@ -1248,6 +1327,5 @@ main {
     border-bottom: 3px solid #E94560;
     display: flex;
     justify-content: center;
-}
-}
+    }
 }
