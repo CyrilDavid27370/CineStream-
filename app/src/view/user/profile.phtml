@@ -39,6 +39,9 @@
         <?php } ?>
 
         <form method="POST" action="?route=profile">
+
+            <?= \Cine\App\Security\CsrfToken::field() ?>
+
             <input type="hidden" name="action" value="email">
             <div class="form-group">
                 <label for="email">Nouvel email</label>
@@ -60,6 +63,9 @@
         <?php } ?>
 
         <form method="POST" action="?route=profile">
+
+            <?= \Cine\App\Security\CsrfToken::field() ?>
+            
             <input type="hidden" name="action" value="password">
             <div class="form-group">
                 <label for="current_password">Mot de passe actuel</label>

@@ -1269,8 +1269,19 @@ main {
         object-fit: contain; 
     }
 
+    .form-radio {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    }
+
+    .stars-input {
+        flex-wrap: wrap;
+        gap: 4px;
+    }
+
     .stars-input label {
-        font-size: 0.9rem;
+        font-size: 0.8rem;
 
     }
 
@@ -1316,24 +1327,24 @@ main {
     }
 
     .modal {
-    padding: 32px;
-    max-width: 420px;
-}
+        padding: 32px;
+        max-width: 420px;
+    }
 
-.modal h3 {
-    font-size: 1.3rem;
-}
+    .modal h3 {
+        font-size: 1.3rem;
+    }
 
-.modal p {
-    font-size: 0.9rem;
-    margin-bottom: 24px;
-}
+    .modal p {
+        font-size: 0.9rem;
+        margin-bottom: 24px;
+    }
 
-.modal-actions {
-    flex-direction: row;
-    justify-content: center;
-    gap: 15px;
-}
+    .modal-actions {
+        flex-direction: row;
+        justify-content: center;
+        gap: 15px;
+    }   
 
     .profile-container {
         padding: 0 20px;
@@ -1350,6 +1361,8 @@ main {
     .profile-card {
         padding: 28px;
     }
+
+
 }
 
 /* ===== DESKTOP ===== */
@@ -1487,8 +1500,8 @@ main {
     }
     
     .modal {
-    padding: 40px;
-}
+        padding: 40px;
+    }
 
     .profile-container {
         margin: 30px auto;

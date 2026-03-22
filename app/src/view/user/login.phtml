@@ -16,7 +16,9 @@
         <?php } ?>
 
         <form method="POST" action="?route=login">
-
+        
+        <?= \Cine\App\Security\CsrfToken::field() ?>
+        
             <div class="form-group">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="votre@email.fr" required autofocus value="<?= htmlspecialchars($_POST['email'] ?? '') ?>">

@@ -30,6 +30,8 @@
 
             <form id="edit-form" method="POST" action="?route=update&id=<?= $film->getId() ?>">
 
+                <?= \Cine\App\Security\CsrfToken::field() ?>
+
                 <div class="form-genre-row">
                     <select name="genre_id" class="form-select">
                         <option value="">-- Choisir un genre personnalisé --</option>

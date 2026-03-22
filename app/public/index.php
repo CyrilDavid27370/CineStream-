@@ -9,6 +9,18 @@ require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../.env.php';
 define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 
+function verifyCsrf(): void
+{
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $token = $_POST['csrf_token'] ?? '';
+        if (!\Cine\App\Security\CsrfToken::verify($token)) {
+            http_response_code(403);
+            die('❌ Requête invalide — token CSRF manquant ou incorrect.');
+        }
+    }
+}
+
+
 $route = $_GET['route'] ?? 'index';
 
 // Routes publiques
@@ -36,6 +48,8 @@ if (!isset($_SESSION['user_id'])) {
     header('Location: ?route=login');
     exit;
 }
+
+verifyCsrf();
 
 if ($route === 'searchApi') {
     $movieController = new MovieController();

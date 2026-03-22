@@ -4,6 +4,8 @@
 
 <div class="genres-container">
     <form method="POST" action="?route=genreCreate">
+
+        <?= \Cine\App\Security\CsrfToken::field() ?>
         
         <div class="genres-header">
             <h2>Ajouter une catégorie</h2>

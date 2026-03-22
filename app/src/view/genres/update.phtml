@@ -4,6 +4,8 @@
 
 <div class="genres-container">
     <form method="POST" action="?route=genreUpdate&id=<?= $genre->getId() ?>">
+
+        <?= \Cine\App\Security\CsrfToken::field() ?>
         
         <div class="genres-header">
             <h2>✏️ Modifier une catégorie</h2>
