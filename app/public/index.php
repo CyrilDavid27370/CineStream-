@@ -6,6 +6,7 @@ use Cine\App\Controller\AuthController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../.env.php';
+define('BASE_URL', 'http://' . $_SERVER['HTTP_HOST']);
 
 $route = $_GET['route'] ?? 'index';
 
