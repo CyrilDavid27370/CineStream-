@@ -1007,6 +1007,69 @@ main {
     border: 1px solid #E94560;
 }
 
+/* ===== MODALE SUPPRESSION ===== */
+
+/* Mobile — base */
+.btn-delete-modal {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
+    transition: transform 0.2s;
+}
+
+.btn-delete-modal:hover {
+    transform: scale(1.2);
+}
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background: #1A1A2E;
+    border: 1px solid #E94560;
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal h3 {
+    font-size: 1.2rem;
+    color: #E94560;
+    margin-bottom: 12px;
+}
+
+.modal p {
+    color: #888888;
+    font-size: 0.85rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+.modal p strong {
+    color: #ffffff;
+}
+
+.modal-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
 
 /* ===== TABLETTE ===== */
 
@@ -1149,6 +1212,27 @@ main {
     .login-link {
         font-size: 0.9rem;
     }
+
+    .modal {
+    padding: 32px;
+    max-width: 420px;
+}
+
+.modal h3 {
+    font-size: 1.3rem;
+}
+
+.modal p {
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+}
+
+.modal-actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+}
+
 }   
 
 /* ===== DESKTOP ===== */
@@ -1284,6 +1368,10 @@ main {
     .login-link {
         margin-top: 20px;
     }
+    
+    .modal {
+    padding: 40px;
+}
 
 }
 
