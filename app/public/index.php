@@ -3,6 +3,7 @@ session_start();
 
 use Cine\App\Controller\MovieController;
 use Cine\App\Controller\AuthController;
+use Cine\App\Controller\UserController;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../.env.php';
@@ -80,4 +81,10 @@ if ($route === 'index') {
     $movieController->genreUpdate();
 } elseif ($route === 'genreDelete') {
     $movieController->genreDelete();
+} elseif ($route === 'profile') {
+    $userController = new UserController();
+    $userController->profile();
+} elseif ($route === 'deleteAccount') {
+    $userController = new UserController();
+    $userController->deleteAccount();
 }

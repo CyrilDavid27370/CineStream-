@@ -9,7 +9,7 @@
                 <li><a href="?route=genres">🎭 <span class="label">CATÉGORIES</span></a></li>
             </div>
             <li class="nav-user">
-                <span class="user-email">👤 <?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></span>
+                <a href="?route=profile" class="user-email">👤 <span class="label"><?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></span></a>
                 <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') { ?>
                     <span class="badge-admin">ADMIN</span>
                 <?php } ?>

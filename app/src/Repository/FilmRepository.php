@@ -97,4 +97,35 @@ class FilmRepository extends Repository
         $request->setFetchMode(PDO::FETCH_CLASS, Film::class);
         return $request->fetch() ?: null;
     }
+
+    public function countByUser(int $userId): int
+{
+    $sql = "SELECT COUNT(*) FROM film WHERE user_id = :user_id";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['user_id' => $userId]);
+    return (int)$request->fetchColumn();
+}
+
+public function countWatchedByUser(int $userId): int
+{
+    $sql = "SELECT COUNT(*) FROM film WHERE user_id = :user_id AND isWatched = 1";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['user_id' => $userId]);
+    return (int)$request->fetchColumn();
+}
+
+public function countToWatchByUser(int $userId): int
+{
+    $sql = "SELECT COUNT(*) FROM film WHERE user_id = :user_id AND isWatched = 0";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['user_id' => $userId]);
+    return (int)$request->fetchColumn();
+}
+
+public function deleteByUser(int $userId): void
+{
+    $sql = "DELETE FROM film WHERE user_id = :user_id";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['user_id' => $userId]);
+}
 }

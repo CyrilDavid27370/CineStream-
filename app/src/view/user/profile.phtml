@@ -1,0 +1,105 @@
+<?php $title = "Mon profil"; ?>
+
+<?php ob_start() ?>
+
+<div class="profile-container">
+
+    <!-- Statistiques -->
+    <div class="profile-stats">
+        <div class="stat-card">
+            <span class="stat-number"><?= $totalFilms ?></span>
+            <span class="stat-label">Films</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number"><?= $watchedFilms ?></span>
+            <span class="stat-label">Vus 👁️</span>
+        </div>
+        <div class="stat-card">
+            <span class="stat-number"><?= $toWatchFilms ?></span>
+            <span class="stat-label">À voir 🕒</span>
+        </div>
+    </div>
+
+    <!-- Infos compte -->
+    <div class="profile-card">
+        <h2>👤 Mon compte</h2>
+        <p class="profile-email"><?= htmlspecialchars($user->getEmail()) ?></p>
+        <p class="profile-role"><?= $user->getRole() === 'admin' ? '⭐ Administrateur' : '🎬 Utilisateur' ?></p>
+    </div>
+
+    <!-- Changer email -->
+    <div class="profile-card">
+        <h2>📧 Changer mon email</h2>
+
+        <?php if ($emailError ?? null) { ?>
+            <p class="error-message"><?= htmlspecialchars($emailError) ?></p>
+        <?php } ?>
+        <?php if ($emailSuccess ?? null) { ?>
+            <p class="success-message"><?= $emailSuccess ?></p>
+        <?php } ?>
+
+        <form method="POST" action="?route=profile">
+            <input type="hidden" name="action" value="email">
+            <div class="form-group">
+                <label for="email">Nouvel email</label>
+                <input type="email" id="email" name="email" placeholder="nouveau@email.fr" required>
+            </div>
+            <button type="submit" class="btn-submit">Mettre à jour</button>
+        </form>
+    </div>
+
+    <!-- Changer mot de passe -->
+    <div class="profile-card">
+        <h2>🔒 Changer mon mot de passe</h2>
+
+        <?php if ($passwordError ?? null) { ?>
+            <p class="error-message"><?= htmlspecialchars($passwordError) ?></p>
+        <?php } ?>
+        <?php if ($passwordSuccess ?? null) { ?>
+            <p class="success-message"><?= $passwordSuccess ?></p>
+        <?php } ?>
+
+        <form method="POST" action="?route=profile">
+            <input type="hidden" name="action" value="password">
+            <div class="form-group">
+                <label for="current_password">Mot de passe actuel</label>
+                <input type="password" id="current_password" name="current_password" placeholder="••••••••" required>
+            </div>
+            <div class="form-group">
+                <label for="new_password">Nouveau mot de passe <span class="hint">(8 caractères minimum)</span></label>
+                <input type="password" id="new_password" name="new_password" placeholder="••••••••" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm_password">Confirmer le mot de passe</label>
+                <input type="password" id="confirm_password" name="confirm_password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="btn-submit">Mettre à jour</button>
+        </form>
+    </div>
+
+    <!-- Supprimer compte -->
+    <div class="profile-card profile-danger">
+        <h2>⚠️ Zone dangereuse</h2>
+        <p class="profile-danger-text">La suppression de votre compte est irréversible. Tous vos films seront supprimés.</p>
+        <button id="btn-delete-account" class="btn-danger">Supprimer mon compte</button>
+    </div>
+
+    <!-- Modale suppression compte -->
+    <div id="modal-delete-account" class="modal-overlay" style="display:none;">
+        <div class="modal">
+            <h3>⚠️ Supprimer votre compte ?</h3>
+            <p>Cette action est <strong>irréversible</strong>. Tous vos films et données seront définitivement supprimés.</p>
+            <div class="modal-actions">
+                <button id="btn-cancel-delete" class="btn-back">Annuler</button>
+                <a href="?route=deleteAccount" class="btn-danger">Confirmer la suppression</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="/js/app.js"></script>
+<script src="/js/profile.js"></script>
+
+<?php $content = ob_get_clean() ?>
+<?php require __DIR__ . '/../base.phtml' ?>

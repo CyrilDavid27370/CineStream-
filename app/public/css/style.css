@@ -1070,6 +1070,108 @@ main {
     align-items: center;
 }
 
+.profile-container {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-stats {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.stat-card {
+    background: #1A1A2E;
+    border: 1px solid #E94560;
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    flex: 1;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #E94560;
+}
+
+.stat-label {
+    display: block;
+    font-size: 0.8rem;
+    color: #888888;
+    margin-top: 4px;
+}
+
+.profile-card {
+    background: #1A1A1A;
+    border: 1px solid #333;
+    border-radius: 16px;
+    padding: 20px;
+}
+
+.profile-card h2 {
+    font-size: 1.1rem;
+    color: #E94560;
+    margin-bottom: 16px;
+}
+
+.profile-email {
+    font-size: 1rem;
+    color: #ffffff;
+    margin-bottom: 6px;
+}
+
+.profile-role {
+    font-size: 0.85rem;
+    color: #888888;
+}
+
+.success-message {
+    background: #1A3A1A;
+    color: #4CAF50;
+    border: 1px solid #4CAF50;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    text-align: center;
+}
+
+.profile-danger {
+    border-color: #E94560;
+}
+
+.profile-danger-text {
+    color: #888888;
+    font-size: 0.85rem;
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+
+.btn-danger {
+    background: transparent;
+    color: #E94560;
+    border: 1.5px solid #E94560;
+    border-radius: 30px;
+    padding: 10px 24px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-danger:hover {
+    background: #E94560;
+    color: #ffffff;
+}
 
 /* ===== TABLETTE ===== */
 
@@ -1233,7 +1335,22 @@ main {
     gap: 15px;
 }
 
-}   
+    .profile-container {
+        padding: 0 20px;
+    }
+
+    .stat-card {
+        padding: 20px;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .profile-card {
+        padding: 28px;
+    }
+}
 
 /* ===== DESKTOP ===== */
 @media (min-width: 768px) {
@@ -1373,6 +1490,13 @@ main {
     padding: 40px;
 }
 
+    .profile-container {
+        margin: 30px auto;
+    }
+
+    .profile-card {
+        padding: 32px;
+    }
 }
 
 @media (min-width: 900px) {
