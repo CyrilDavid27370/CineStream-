@@ -129,8 +129,8 @@ public function genres()
     require __DIR__ . '/../view/genres/index.phtml';
 }
 
-public function genreCreate()
-{
+    public function genreCreate()
+    {   
     if (isset($_POST['name'])) {
         if (empty(trim($_POST['name']))) {
             $_SESSION['flash'] = '⚠️ Le nom ne peut pas être vide !';
@@ -155,10 +155,10 @@ public function genreCreate()
     }
 
     require __DIR__ . '/../view/genres/create.phtml';
-}
+    }   
 
-public function genreUpdate()
-{
+    public function genreUpdate()
+    {
     $id = (int)$_GET['id'];
     $genre = $this->genreRepository->findById($id);
 
@@ -171,19 +171,19 @@ public function genreUpdate()
     }
 
     require __DIR__ . '/../view/genres/update.phtml';
-}
+    }
 
-public function genreDelete()
-{
+    public function genreDelete()
+    {
     $id = (int)$_GET['id'];
     $this->genreRepository->delete($id);
     $_SESSION['flash'] = '✅ Catégorie supprimée avec succès !';
     header('Location: ?route=genres');
     exit;
-}
+    }
 
-public function addFromTmdb()
-{
+    public function addFromTmdb()
+    {
     $tmdbId = (int)$_GET['id'];
 
     $existingFilm = $this->filmRepository->findByTmdbId($tmdbId, $this->userId);
@@ -209,32 +209,8 @@ public function addFromTmdb()
     $_SESSION['flash'] = '✅ Film ajouté à la vidéothèque !';
     header('Location: ?route=index');
     exit;
-}
-    public function searchApi(): void
-{
-    header('Content-Type: application/json');
-
-    $query = trim($_GET['query'] ?? '');
-
-    if (empty($query)) {
-        echo json_encode([]);
-        exit;
     }
 
-    $results = $this->tmdb->getFilmByTmdbSearch($query);
-    $films = $results['results'] ?? [];
-
-    // Pour chaque film, vérifie s'il est déjà dans la vidéothèque
-    $films = array_map(function($film) {
-        $existing = $this->filmRepository->findByTmdbId($film['id'], $this->userId);
-        $film['in_library'] = $existing !== null;
-        $film['library_id'] = $existing ? $existing->getId() : null;
-        return $film;
-    }, $films);
-
-    echo json_encode($films);
-    exit;
-}
 
     public function addFromTmdbApi(): void
     {
@@ -271,10 +247,35 @@ public function addFromTmdb()
 }
 
     public function filmsApi(): void
-    {
+{
     header('Content-Type: application/json');
 
-    $films = $this->filmRepository->findAll($this->userId);
+    $page  = max(1, (int)($_GET['page'] ?? 1));
+    $limit = 6;
+    $offset = ($page - 1) * $limit;
+
+    $allFilms = $this->filmRepository->findAll($this->userId);
+    $total    = count($allFilms);
+    $totalPages = (int)ceil($total / $limit);
+
+    // Filtre par genre ou statut si demandé
+    $filter  = $_GET['filter'] ?? 'all';
+    $genreId = $_GET['genre'] ?? null;
+
+    if ($genreId === 'nc') {
+        $allFilms = array_filter($allFilms, fn($f) => $f->getGenre_id() === null);
+    } elseif ($genreId) {
+        $allFilms = array_filter($allFilms, fn($f) => $f->getGenre_id() == $genreId);
+    } elseif ($filter === 'watched') {
+        $allFilms = array_filter($allFilms, fn($f) => $f->getIsWatched() == 1);
+    } elseif ($filter === 'towatch') {
+        $allFilms = array_filter($allFilms, fn($f) => $f->getIsWatched() == 0);
+    }
+
+    $allFilms   = array_values($allFilms);
+    $total      = count($allFilms);
+    $totalPages = (int)ceil($total / $limit);
+    $films      = array_slice($allFilms, $offset, $limit);
 
     $data = array_map(function($film) {
         return [
@@ -287,9 +288,14 @@ public function addFromTmdb()
         ];
     }, $films);
 
-    echo json_encode($data);
+    echo json_encode([
+        'films'       => $data,
+        'page'        => $page,
+        'totalPages'  => $totalPages,
+        'total'       => $total,
+    ]);
     exit;
-}  
+}
 private function checkFilmOwnership(Film $film): void
 {
     if ($_SESSION['user_role'] !== 'admin' && $film->getUser_id() !== $this->userId) {

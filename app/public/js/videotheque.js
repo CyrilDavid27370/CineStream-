@@ -1,6 +1,9 @@
 let allFilms = [];
+let currentPage = 1;
+let currentFilter = 'all';
+let currentGenreId = null;
 
-async function loadFilms() {
+async function loadFilms(page = 1) {
     const container = document.getElementById('films-container');
 
     container.innerHTML = `
@@ -9,10 +12,22 @@ async function loadFilms() {
         </div>
     `;
 
+    let url = `${BASE_URL}/?route=filmsApi&page=${page}`;
+    if (currentGenreId === 'nc') {
+        url += `&genre=nc`;
+    } else if (currentGenreId) {
+        url += `&genre=${currentGenreId}`;
+    } else if (currentFilter !== 'all') {
+        url += `&filter=${currentFilter}`;
+    }
+
     try {
-        const response = await fetch(BASE_URL + '/?route=filmsApi');
-        allFilms = await response.json();
-        renderFilms(allFilms);
+        const response = await fetch(url);
+        const result = await response.json();
+
+        currentPage = result.page;
+        renderFilms(result.films);
+        renderPagination(result.page, result.totalPages, result.total);
     } catch (error) {
         console.error('Erreur chargement films:', error);
     }
@@ -25,6 +40,7 @@ function renderFilms(films) {
     if (films.length === 0) {
         container.innerHTML = '';
         emptyMessage.style.display = 'block';
+        document.getElementById('pagination').innerHTML = '';
         return;
     }
 
@@ -43,6 +59,34 @@ function renderFilms(films) {
     `).join('');
 }
 
+function renderPagination(page, totalPages, total) {
+    const pagination = document.getElementById('pagination');
+
+    if (totalPages <= 1) {
+        pagination.innerHTML = '';
+        return;
+    }
+
+    let html = `<div class="pagination-info">${total} film(s)</div><div class="pagination-buttons">`;
+
+    // Bouton précédent
+    html += `<button class="btn-page ${page === 1 ? 'disabled' : ''}" 
+        ${page === 1 ? 'disabled' : `onclick="loadFilms(${page - 1})"`}>←</button>`;
+
+    // Boutons de pages
+    for (let i = 1; i <= totalPages; i++) {
+        html += `<button class="btn-page ${i === page ? 'active' : ''}" 
+            onclick="loadFilms(${i})">${i}</button>`;
+    }
+
+    // Bouton suivant
+    html += `<button class="btn-page ${page === totalPages ? 'disabled' : ''}" 
+        ${page === totalPages ? 'disabled' : `onclick="loadFilms(${page + 1})"`}>→</button>`;
+
+    html += `</div>`;
+    pagination.innerHTML = html;
+}
+
 function filterFilms(btn) {
     document.querySelectorAll('.filters button').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
@@ -50,19 +94,20 @@ function filterFilms(btn) {
     const filter = btn.dataset.filter;
     const genreId = btn.dataset.genreId;
 
-    let filtered = allFilms;
+    currentFilter = filter;
+    currentGenreId = genreId || null;
 
     if (filter === 'genre') {
-        filtered = allFilms.filter(f => f.genre_id == genreId);
+        currentGenreId = genreId;
+        currentFilter = 'all';
     } else if (filter === 'nc') {
-        filtered = allFilms.filter(f => f.genre_id === null);
-    } else if (filter === 'watched') {
-        filtered = allFilms.filter(f => f.isWatched == 1);
-    } else if (filter === 'towatch') {
-        filtered = allFilms.filter(f => f.isWatched == 0);
+        currentGenreId = 'nc';
+        currentFilter = 'all';
+    } else {
+        currentGenreId = null;
     }
 
-    renderFilms(filtered);
+    loadFilms(1);
 }
 
 document.querySelectorAll('.filters button').forEach(btn => {
@@ -81,4 +126,4 @@ document.getElementById('btn-list').addEventListener('click', function() {
     document.getElementById('btn-grid').classList.remove('active');
 });
 
-loadFilms();
+loadFilms(1);

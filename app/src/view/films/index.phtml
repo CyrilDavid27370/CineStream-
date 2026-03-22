@@ -25,6 +25,7 @@
 
 <div class="films-grid <?= $view === 'list' ? 'list-view' : '' ?>" id="films-container"></div>
 <p class="empty-message" id="empty-message" style="display:none;">🎬 Votre vidéothèque est vide. Commencez à constituer votre collection !</p>
+<div id="pagination" class="pagination"></div>
 
 <script>
     const BASE_URL = '<?= BASE_URL ?>';
