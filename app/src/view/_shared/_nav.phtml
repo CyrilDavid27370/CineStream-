@@ -7,6 +7,13 @@
                 <li><a href="?route=index">📼 <span class="label">VIDÉOTHÈQUE</span></a></li>
                 <li><a href="?route=search">🔍 <span class="label">RECHERCHE</span></a></li>
                 <li><a href="?route=genres">🎭 <span class="label">CATÉGORIES</span></a></li>
+
+                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') { ?>
+                
+                <li><a href="?route=adminUsers">⚙️ <span class="label">ADMIN</span></a></li>
+                
+                <?php } ?>
+                
             </div>
             <li class="nav-user">
                 <a href="?route=profile" class="user-email">👤 <span class="label"><?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></span></a>

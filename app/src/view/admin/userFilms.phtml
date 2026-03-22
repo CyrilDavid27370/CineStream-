@@ -1,0 +1,54 @@
+<?php $title = "Films de " . htmlspecialchars($user->getEmail()); ?>
+
+<?php ob_start() ?>
+
+<div class="admin-container">
+
+    <div class="admin-header">
+        <h2>🎬 Vidéothèque de <?= htmlspecialchars($user->getEmail()) ?></h2>
+        <span class="admin-count"><?= count($films) ?> film(s)</span>
+    </div>
+
+    <a href="?route=adminUsers" class="btn-back" style="display:inline-block;margin-bottom:20px;">← Retour</a>
+
+    <?php if (empty($films)) { ?>
+        <p class="empty-message">🎬 Cet utilisateur n'a aucun film dans sa vidéothèque.</p>
+    <?php } else { ?>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th>Affiche</th>
+                    <th>Titre</th>
+                    <th>Année</th>
+                    <th>Genre</th>
+                    <th>Statut</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($films as $film) { ?>
+                    <tr>
+                        <td>
+                            <?php if ($film->getPoster_path()) { ?>
+                                <img src="https://image.tmdb.org/t/p/w92<?= $film->getPoster_path() ?>" 
+                                    alt="<?= htmlspecialchars($film->getTitle()) ?>"
+                                    style="border-radius:4px;">
+                            <?php } else { ?>
+                                🎥
+                            <?php } ?>
+                        </td>
+                        <td><?= htmlspecialchars($film->getTitle()) ?></td>
+                        <td><?= $film->getRelease_date() ?></td>
+                        <td><?= htmlspecialchars($film->getGenre_name() ?? 'n/c') ?></td>
+                        <td><?= $film->getIsWatched() ? '👁️ Vu' : '🕒 À voir' ?></td>
+                        <td><?= $film->getRating() ? '⭐ ' . $film->getRating() . '/10' : '-' ?></td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    <?php } ?>
+
+</div>
+
+<?php $content = ob_get_clean() ?>
+<?php require __DIR__ . '/../base.phtml' ?>

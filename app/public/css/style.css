@@ -1202,6 +1202,118 @@ main {
     color: #ffffff;
 }
 
+.admin-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    overflow-x: auto;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.admin-header h2 {
+    color: #E94560;
+    font-size: 1.3rem;
+}
+
+.admin-count {
+    background: #E94560;
+    color: white;
+    border-radius: 30px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #1A1A2E;
+    border-radius: 12px;
+    overflow: hidden;
+    font-size: 0.85rem;
+}
+
+.admin-table th {
+    background: #E94560;
+    color: white;
+    padding: 10px 12px;
+    text-align: left;
+    font-size: 0.8rem;
+}
+
+.admin-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #333;
+    color: #ffffff;
+    vertical-align: middle;
+}
+
+.admin-table tr:last-child td {
+    border-bottom: none;
+}
+
+.admin-table tr:hover td {
+    background: #16213E;
+}
+
+.badge-user {
+    background: #333;
+    color: #888;
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 2px 8px;
+    border-radius: 30px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.btn-view {
+    background: #1A1A2E;
+    color: #E94560;
+    border: 1px solid #E94560;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: background 0.3s;
+    white-space: nowrap;
+}
+
+.btn-view:hover {
+    background: #E94560;
+    color: white;
+}
+
+.btn-delete-user {
+    background: transparent;
+    color: #888;
+    border: 1px solid #555;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    text-decoration: none;
+    transition: all 0.3s;
+    white-space: nowrap;
+}
+
+.btn-delete-user:hover {
+    background: #E94560;
+    color: white;
+    border-color: #E94560;
+}
+
+
 /* ===== TABLETTE ===== */
 
 @media (min-width: 480px) {
@@ -1396,6 +1508,14 @@ main {
         font-size: 0.8rem;
         padding: 8px 10px;
     }
+
+    .admin-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .admin-table {
+        font-size: 0.9rem;
+    }
 }
 
 
@@ -1544,6 +1664,12 @@ main {
     .profile-card {
         padding: 32px;
     }
+
+    .admin-container {
+        padding: 0 20px;
+        margin: 30px auto;
+    }
+    
 }
 
 @media (min-width: 900px) {

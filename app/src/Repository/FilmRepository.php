@@ -128,4 +128,18 @@ public function deleteByUser(int $userId): void
     $request = $this->pdo->prepare($sql);
     $request->execute(['user_id' => $userId]);
 }
+
+public function findAllByUser(int $userId): array
+{
+    $sql = "SELECT film.*, genre.name AS genre_name 
+            FROM film 
+            LEFT JOIN genre ON film.genre_id = genre.id
+            WHERE film.user_id = :user_id
+            ORDER BY film.id DESC";
+    $request = $this->pdo->prepare($sql);
+    $request->execute(['user_id' => $userId]);
+    $request->setFetchMode(PDO::FETCH_CLASS, Film::class);
+    return $request->fetchAll();
+}
+
 }

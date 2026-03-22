@@ -58,4 +58,14 @@ public function delete(int $id): void
     $request = $this->pdo->prepare($sql);
     $request->execute(['id' => $id]);
 }
+
+public function findAll(): array
+{
+    $sql = "SELECT * FROM users ORDER BY created_at DESC";
+    $request = $this->pdo->prepare($sql);
+    $request->execute();
+    $request->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, User::class);
+    return $request->fetchAll();
+}
+
 }
