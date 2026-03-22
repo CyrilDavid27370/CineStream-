@@ -1007,9 +1007,6 @@ main {
     border: 1px solid #E94560;
 }
 
-/* ===== MODALE SUPPRESSION ===== */
-
-/* Mobile — base */
 .btn-delete-modal {
     background: none;
     border: none;
@@ -1169,6 +1166,38 @@ main {
 }
 
 .btn-danger:hover {
+    background: #E94560;
+    color: #ffffff;
+}
+
+.card-in-library {
+    border: 2px solid #4CAF50;
+}
+
+.badge-library {
+    background: #1A3A1A;
+    color: #4CAF50;
+    border-top: 1px solid #4CAF50;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+}
+
+.badge-add {
+    display: block;
+    background: #1A1A2E;
+    color: #E94560;
+    border-top: 1px solid #E94560;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.badge-add:hover {
     background: #E94560;
     color: #ffffff;
 }
@@ -1362,8 +1391,13 @@ main {
         padding: 28px;
     }
 
-
+    badge-library,
+    .badge-add {
+        font-size: 0.8rem;
+        padding: 8px 10px;
+    }
 }
+
 
 /* ===== DESKTOP ===== */
 @media (min-width: 768px) {

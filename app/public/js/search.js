@@ -39,18 +39,22 @@ async function searchFilms(query) {
             return;
         }
 
-        resultsContainer.innerHTML = films.map(film => `
-            <a href="?route=showTmdb&id=${film.id}" class="card-link">
-                <div class="card">
-                    ${film.poster_path
-                        ? `<img src="${IMAGE_URL}${film.poster_path}" alt="${escapeHtml(film.title)}">`
-                        : `<div class="no-poster">🎥</div>`
-                    }
-                    <div class="search-title">${escapeHtml(film.title)}</div>
-                    <div class="search-meta">📅 ${film.release_date ? film.release_date.substring(0, 4) : 'n/c'}</div>
-                </div>
-            </a>
-        `).join('');
+    resultsContainer.innerHTML = films.map(film => `
+    <a href="?route=showTmdb&id=${film.id}" class="search-card-link">
+        <div class="search-card ${film.in_library ? 'card-in-library' : ''}">
+            ${film.poster_path
+                ? `<img src="${IMAGE_URL}${film.poster_path}" alt="${escapeHtml(film.title)}">`
+                : `<div class="no-poster">🎥</div>`
+            }
+            <div class="search-card-title">${escapeHtml(film.title)}</div>
+            <div class="search-card-meta">📅 ${film.release_date ? film.release_date.substring(0, 4) : 'n/c'}</div>
+            ${film.in_library 
+                ? `<div class="badge-library">✅ Dans ma vidéothèque</div>`
+                : `<div class="badge-add">➕ Ajouter</div>`
+            }
+        </div>
+    </a>
+`).join('');
 
     } catch (error) {
         loader.style.display = 'none';

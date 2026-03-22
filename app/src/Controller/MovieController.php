@@ -222,7 +222,17 @@ public function addFromTmdb()
     }
 
     $results = $this->tmdb->getFilmByTmdbSearch($query);
-    echo json_encode($results['results'] ?? []);
+    $films = $results['results'] ?? [];
+
+    // Pour chaque film, vérifie s'il est déjà dans la vidéothèque
+    $films = array_map(function($film) {
+        $existing = $this->filmRepository->findByTmdbId($film['id'], $this->userId);
+        $film['in_library'] = $existing !== null;
+        $film['library_id'] = $existing ? $existing->getId() : null;
+        return $film;
+    }, $films);
+
+    echo json_encode($films);
     exit;
 }
 
